@@ -3,7 +3,8 @@ import nextra from 'nextra';
 const withNextra = nextra({
   search: {
     codeblocks: false
-  }
+  },
+  latex: true
 });
 
 export default withNextra({

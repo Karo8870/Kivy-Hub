@@ -1,0 +1,67 @@
+# Dataset
+
+## Dataset Structure
+
+Each recipe in the main 500.000 dataset includes the following attributes:
+
+### Textual Information
+
+| Field           | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| **Name**        | The recipe title                                     |
+| **Description** | A brief textual overview or background of the recipe |
+| **Steps**       | An ordered list of instructions for preparation      |
+
+### Categorical Fields
+
+| Field                | Examples                                                  |
+| -------------------- | --------------------------------------------------------- |
+| **Tags**             | `vegan`, `gluten-free`                                    |
+| **General Category** | `quick`, `dessert`, `holiday`, `main course`, `appetizer` |
+
+### Nutritional Values
+
+| Nutrient      | Unit |
+| ------------- | ---- |
+| Calories      |      |
+| Cholesterol   |      |
+| Sodium        |      |
+| Carbohydrates |      |
+| Fiber         |      |
+| Sugar         |      |
+| Protein       |      |
+| Total Fat     |      |
+| Saturated Fat |      |
+
+### Ingredients
+
+Each ingredient entry includes:
+
+| Field                 | Description                                                            |
+| --------------------- | ---------------------------------------------------------------------- |
+| **Name**              | The name of the ingredient                                             |
+| **Quantity**          | How much is needed                                                     |
+| **Unit of Measure**   | The measurement unit (e.g., grams, cups)                               |
+| **Optional Metadata** | Preparation style or additional descriptors (e.g., “chopped”, “fresh”) |
+
+### Additional Metadata
+
+| Field            | Description                | Unit |
+| ---------------- | -------------------------- | ---- |
+| Preparation Time | Time needed to prepare     |      |
+| Cooking Time     | Time needed to cook        |      |
+| Serving Size     | Number of servings         |      |
+| Author           | Creator of the recipe      |      |
+| Images           | Associated images (if any) |      |
+
+## Preprocessing and Filtering
+
+To reduce sparsity and improve semantic consistency, we filtered out all tags, categories, and ingredients that appeared fewer than five times across the corpus. This resulted in a significant reduction of ingredient types from over 450,000 to approximately 20,000 standardized ingredients. To handle removed or rare ingredients, we applied semantic similarity-based imputation using pretrained language models, replacing rare items with the most similar frequent equivalents. The same strategy was applied to rare tags and categories. For modeling purposes, we retained a subset of the most semantically informative features: Name, Steps, Ingredients, Nutritional Information, Tags, and General Category.
+
+## Extended Recipes via RecipeNLG
+
+To further scale our dataset, we leveraged the RecipeNLG dataset, which contains over 2 million recipes, including many from Food.com. RecipeNLG provides Title, Ingredients, and Steps, but lacks nutritional data, categories, and tags. To address this, we trained a classification model using our curated 500k dataset to impute missing tags and general categories in RecipeNLG. This enables the integration of additional recipe data for training and evaluation while maintaining semantic richness.
+
+## Ingredient Nutrition Matching
+
+We also incorporated nutritional values for individual ingredients using the USDA FoodData Central database. Ingredient-level nutrition information was aggregated per recipe and cross-checked with available recipe-level nutrition estimates when possible, increasing the reliability of health related attributes in the dataset.

@@ -1,0 +1,160 @@
+import 'katex/dist/katex.css';
+
+# Embedding Architecture
+
+Our ingredient encoder consists of three consecutive blocks:
+(1) Nutriment MLP, (2) Name encoder (BERT), and (3) Fusion MLP. Once each
+ingredient is encoded, we aggregate across the ingredient set with a
+Transformer encoder.
+
+## Nutriment MLP
+
+Given per-ingredient nutriments $x_n \in \mathbb{R}^{d_n}$ (with $d_n=9$)
+and a scalar quantity $q\in\mathbb{R}$, we form
+
+$$
+x_{\mathrm{nut}} = \bigl[x_n; q\bigr] \in \mathbb{R}^{d_n+1}.
+$$
+
+The block applies two affine transformations with BatchNorm, ReLU, and dropout:
+
+$$
+\begin{aligned}
+h_1 &= \mathrm{ReLU}\bigl(\mathrm{BN}(W_1\,x_{\mathrm{nut}} + b_1)\bigr) \\
+h_1' &= \mathrm{Dropout}(h_1) \\
+h_2 &= \mathrm{ReLU}(W_2\,h_1' + b_2)
+\end{aligned}
+$$
+
+We denote this entire operation as:
+
+$$
+h_{\mathrm{nut}} = \mathrm{NutEnc}(x_{\mathrm{nut}}).
+$$
+
+---
+
+#### Name Encoder (BERT)
+
+Let the ingredient name be a token sequence
+$\mathbf{x}_{\mathrm{name}}=(w_1,\dots,w_L)$. We extract the [CLS] embedding
+from a pretrained BERT:
+
+$$
+e_{\mathrm{name}} = \mathrm{BERT}_{[\mathrm{CLS}]}\bigl(\mathbf{x}_{\mathrm{name}}\bigr)
+\in \mathbb{R}^{d_{\mathrm{bert}}}.
+$$
+
+We then project to a lower-dimensional space:
+
+$$
+e_{\mathrm{name}}^{\mathrm{proj}} = W_p\,e_{\mathrm{name}} + b_p.
+$$
+
+---
+
+#### Fusion MLP
+
+We fuse the numeric and textual features by concatenation:
+
+$$
+z_{\mathrm{fuse}} = \bigl[h_2;\;e_{\mathrm{name}}^{\mathrm{proj}}\bigr].
+$$
+
+A two-layer MLP with BatchNorm, ReLU, and dropout produces the final ingredient embedding:
+
+$$
+\begin{aligned}
+f_1 &= \mathrm{ReLU}\bigl(\mathrm{BN}_f(W_f\,z_{\mathrm{fuse}} + b_f)\bigr) \\
+f_1' &= \mathrm{Dropout}(f_1) \\
+z_{\mathrm{ingr}} &= \mathrm{ReLU}(W_o\,f_1' + b_o)
+\end{aligned}
+$$
+
+---
+
+#### Ingredient Set Aggregator
+
+Stacking all $N$ ingredient embeddings
+$\{z_{\mathrm{ingr}}^{(i)}\}_{i=1}^N$ into a matrix, we apply a standard Transformer encoder:
+
+$$
+Z_{\mathrm{trans}} = \mathrm{TransformerEncoder}
+\bigl([\,z_{\mathrm{ingr}}^{(1)},\dots,z_{\mathrm{ingr}}^{(N)}]\bigr)
+\in \mathbb{R}^{N\times d_{\mathrm{trans}}}.
+$$
+
+A simple mean-pool over the sequence yields the recipe-level ingredient representation:
+
+$$
+z_{\mathrm{recipe}} = \frac{1}{N}\sum_{i=1}^N Z_{\mathrm{trans}}^{(i)}.
+$$
+
+## Recipe Encoder
+
+The recipe encoder transforms high‐level recipe features (title, overall nutriments, and cooking steps) into embeddings, which are then fused together with the ingredient representation.
+
+---
+
+#### Title Encoder
+
+For title tokens $\mathbf{x}_{\mathrm{title}} = (w_1, \dots, w_T)$:
+
+$$
+e_{\mathrm{title}} = \mathrm{BERT}_{[\mathrm{CLS}]}\bigl(\mathbf{x}_{\mathrm{title}}\bigr),
+\quad
+z_{\mathrm{title}} = W_t\,e_{\mathrm{title}} + b_t.
+$$
+
+---
+
+#### Recipe Nutriment MLP
+
+Given recipe-level nutriments $x_{\mathrm{nutr,rec}} \in \mathbb{R}^{d_{\mathrm{nutr,rec}}}$:
+
+$$
+\begin{aligned}
+h_{\mathrm{rec}} &= \mathrm{ReLU}\bigl(\mathrm{BN}_r(W_r\,x_{\mathrm{nutr,rec}} + b_r)\bigr), \\
+z_{\mathrm{nutr,rec}} &= \mathrm{ReLU}(W_r'\,h_{\mathrm{rec}} + b_r').
+\end{aligned}
+$$
+
+---
+
+#### Steps Encoder
+
+For step tokens $\mathbf{x}_{\mathrm{steps}} = (w_1, \dots, w_S)$:
+
+$$
+e_{\mathrm{steps}} = \mathrm{BERT}_{[\mathrm{CLS}]}\bigl(\mathbf{x}_{\mathrm{steps}}\bigr),
+\quad
+z_{\mathrm{steps}} = W_s\,e_{\mathrm{steps}} + b_s.
+$$
+
+---
+
+#### Final Fusion
+
+We concatenate all high‐level vectors:
+
+$$
+z_{\mathrm{all}} = \bigl[z_{\mathrm{recipe}};\;z_{\mathrm{title}};\;z_{\mathrm{nutr,rec}};\;z_{\mathrm{steps}}\bigr].
+$$
+
+A final two-layer MLP produces the unified recipe representation:
+
+$$
+\begin{aligned}
+f_{\mathrm{all},1} &= \mathrm{ReLU}\bigl(\mathrm{BN}_a(W_a\,z_{\mathrm{all}} + b_a)\bigr), \\
+f_{\mathrm{all},1}' &= \mathrm{Dropout}(f_{\mathrm{all},1}), \\
+z_{\mathrm{final}} &= \mathrm{ReLU}(W_f\,f_{\mathrm{all},1}' + b_f).
+\end{aligned}
+$$
+
+---
+
+**Final Representation:**
+
+$$
+\boxed{\,z_{\mathrm{final}}\,}
+$$

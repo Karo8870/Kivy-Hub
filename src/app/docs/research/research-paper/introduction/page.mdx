@@ -2,8 +2,25 @@
 
 ## Motivation
 
+Food plays a fundamental role in human life, not only as a source of sustenance but also as a central element of culture, identity, health, and creativity. In recent years, the intersection of artificial intelligence (AI), human-computer interaction (HCI), and nutritional science has given rise to a new field: computational gastronomy. This emerging discipline seeks to model, understand, and generate culinary knowledge in ways that are machine-interpretable and human-centered.
+
+Despite rapid progress in digital technology, the modern kitchen remains largely analog. Most tools, devices, and applications used during cooking are not designed to support seamless, intelligent interaction. Users often face fragmented interfaces, lack of contextual guidance, and a disconnect between available ingredients and relevant recipe suggestions. Moreover, individuals with specific dietary needs or nutritional goals frequently lack personalized, real-time assistance that adapts to their context and preferences.
+
+At the same time, the explosion of online recipes (millions of user-submitted dishes with varying levels of structure and quality) presents both a challenge and an opportunity. The challenge lies in the unstructured nature of recipe text, inconsistent metadata, and ingredient ambiguity. The opportunity, however, lies in using deep learning techniques to extract meaning from this data and enable new forms of interaction with food-related information.
+
+In this paper, we present the architecture, methodology, and implementation of Kivy, with a particular focus on the recipe embedding model.
+
 ## Problem Statement
 
-## Scope
+Despite the growing interest in computational food understanding, there remains a lack of high-quality, structured datasets and efficient, general-purpose models for learning robust representations of textual recipe data. Existing approaches to recipe embedding often depend on multimodal data (e.g., images, user interactions) or rely on shallow textual features that fail to capture the deeper semantic relationships between ingredients, instructions, and culinary intent.
+
+Moreover, many available datasets contain noisy or incomplete information, such as improperly formatted ingredient lists, ambiguous instructions, or inconsistent metadata. This significantly limits the ability of models to generalize across tasks such as retrieval, classification, or recipe generation. Without clean data and strong embeddings, intelligent food systems are constrained in their ability to offer accurate recommendations, enable creative substitutions, or support health-aware personalization.
+
+To bridge this gap, there is a need for (1) a reliable, well-structured textual recipe dataset, and (2) a model capable of encoding recipes into dense, meaningful representations that capture their functional, cultural, and nutritional context. This paper addresses both challenges.
 
 ## Objectives
+
+Kivy was developed as a response to this need of modernizing the field by creating the following:
+
+- A novel autoencoder-based deep learning model that generates dense, meaningful embeddings of recipes from textual components;
+- A curated, large-scale dataset of over 2.5 million recipes, enriched with nutritional and semantic metadata;

@@ -10,7 +10,7 @@ export default {
   'research-paper': {
     title: 'Research Paper'
   },
-  'how-to-cite': {
-    title: 'How to Cite'
+  'license-and-citation': {
+    title: 'License and Citation'
   }
 } as MetaRecord;

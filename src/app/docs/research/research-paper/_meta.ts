@@ -16,8 +16,8 @@ export default {
   architecture: {
     title: 'Architecture'
   },
-  'real-world-applications': {
-    title: 'Real-World Applications'
+  'training-objectives': {
+    title: 'Training Objectives'
   },
   'ethical-considerations': {
     title: 'Ethical Considerations'

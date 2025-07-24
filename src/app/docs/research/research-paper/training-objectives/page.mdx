@@ -1,0 +1,15 @@
+# Training Objectives
+
+To train rich and meaningful embeddings for recipes, we propose a multi-task learning framework centered on the final unified recipe embedding, denoted as zfinal. This embedding is optimized through the combination of three training objectives.
+
+## Autoencoder Objective
+
+An autoencoder structure is used to ensure that zfinal captures essential information from the recipe. The encoder network transforms the raw recipe input (which could include ingredients, steps, and nutriments, or a lower-dimensional summary) into the embedding, while the decoder attempts to reconstruct the original input. The learning signal is provided by a reconstruction loss, specifically the mean squared error (MSE) between the decoded output and the original input. This encourages the embedding to retain critical recipe-level details.
+
+## Nutriment Prediction Objective
+
+To incorporate nutritional information, a regression head is trained on top of zfinal to predict nutritional values such as calories, protein, and fat. The ground truth nutriments are treated as a real-valued vector, and the prediction loss is also computed using mean squared error (MSE) between the predicted and true nutriment values. This helps the model learn features that are relevant for estimating dietary properties of recipes.
+
+## Tag and Category Classification Objective
+
+The model is also trained to recognize two types of categorical labels: multi-label tags and multi-class categories. For tag prediction, the model outputs a probability for each possible tag using a sigmoid activation function. The objective is to minimize binary cross-entropy loss for each tag, effectively teaching the model to assign appropriate labels (e.g., "vegan", "gluten-free") based on the recipe’s content. For category prediction, a softmax output is used to classify each recipe into a single category (e.g., "dessert", "main course"). The corresponding loss is standard categorical cross-entropy, computed between the predicted category distribution and the ground truth one-hot encoded label.
