@@ -1,12 +1,18 @@
-import { useMDXComponents as getThemeComponents } from 'nextra-theme-docs'; // nextra-theme-blog or your custom theme
+import { useMDXComponents as getThemeComponents } from 'nextra-theme-docs';
+import Link from 'next/link';
 
-// Get the default MDX components
 const themeComponents = getThemeComponents();
 
-// Merge components
 export function useMDXComponents(components) {
   return {
     ...themeComponents,
-    ...components
+    ...components,
+    a({ href, children }) {
+      return (
+        <Link href={href} className='text-blue-400'>
+          {children}
+        </Link>
+      );
+    }
   };
 }
