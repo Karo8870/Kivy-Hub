@@ -1,0 +1,40 @@
+# Selectable
+
+A versatile wrapper that catches types of touches. It listens to Kivy touch events and triggers corresponding callbacks. While being hovered, a selectable will have a white inner shadow, then when the component has been successfully touched it will have an inner shadow corresponding to the type of touch, blue for primary, green for secondary and yellow for tertiary.
+
+## Import
+
+```ts
+import { Selectable } from 'kivy-hub/core';
+```
+
+## Props
+
+| Prop               | Type                           | Default | Description                                                        |
+| ------------------ | ------------------------------ | ------- | ------------------------------------------------------------------ |
+| enabled            | `boolean`                        | true    | Whether the component accepts interaction events.                  |
+| children           | `ReactNode`                      | —       | The child components to render inside the selectable container.    |
+| ref                | `RefObject<HTMLDivElement>`      | —       | Optional ref to the root div element.                              |
+| onPrimaryPress     | `(e: TouchEvent) => void`        | —       | Callback for primary-touch-down after delay.                       |
+| onSecondaryPress   | `(e: TouchEvent) => void`        | —       | Callback for secondary-touch-down after delay.                     |
+| onTertiaryPress    | `(e: TouchEvent) => void`        | —       | Callback for tertiary-touch-down after delay.                      |
+| onPrimaryRelease   | `(e: TouchEvent) => void`        | —       | Callback for primary-touch-up if it matched the previous press.    |
+| onSecondaryRelease | `(e: TouchEvent) => void`        | —       | Callback for secondary-touch-up if it matched the previous press.  |
+| onTertiaryRelease  | `(e: TouchEvent) => void`        | —       | Callback for tertiary-touch-up if it matched the previous press.   |
+| delay              | `number`                         | 500     | Delay in ms before a press event triggers.                         |
+| forceSelect        | `boolean`                        | —       | (Unused in current code, reserved for future extension.)           |
+| stopPropagation    | `boolean`                        | false   | Whether to stop propagation of custom events.                      |
+| showFeedback       | `boolean`                        | true    | Whether to show visual feedback (colored glow) during interaction. |
+| ...props           | `HTMLAttributes<HTMLDivElement>` | —       | Any other valid div props (e.g., className, id, etc).              |
+
+## Usage
+
+```tsx
+<Selectable
+  onPrimaryPress={(e) => console.log('Primary pressed!', e)}
+  onPrimaryRelease={(e) => console.log('Primary released!', e)}
+  delay={300}
+>
+  <div className="w-32 h-32 bg-gray-300">Touch Me</div>
+</Selectable>
+```

@@ -1,0 +1,36 @@
+# Movable
+
+A superset of the [Selectable](/docs/developer-documentation/kivy-hub/core-components/selectable) component that can be moved when selected, usually with a secondary touch.
+
+## Import
+
+```ts
+import { Movable } from 'kivy-hub/core';
+```
+
+## Props
+
+`Movable` already inherits all props from the `Selectable` component and adds the following:
+
+| Prop        | Type                                | Default        | Description                                                          |
+| ----------- | ----------------------------------- | -------------- | -------------------------------------------------------------------- |
+| initialPos  | `{ x: number, y: number }`            | `{ x: 0, y: 0 }` | The initial screen position of the movable component.                |
+| positionRef | `RefObject<{ x: number, y: number }>` | —              | An optional external reference to track and manipulate the position. |
+
+## Usage
+
+```tsx
+<Movable initialPos={{ x: 100, y: 150 }}>
+  <div className='h-32 w-32 bg-blue-500'>Drag Me!</div>
+</Movable>
+```
+
+You can also pass a positionRef to monitor or control the position externally:
+
+```tsx
+const posRef = useRef<Point>({ x: 50, y: 50 });
+
+<Movable positionRef={posRef}>
+  <SomeWidget />
+</Movable>;
+```

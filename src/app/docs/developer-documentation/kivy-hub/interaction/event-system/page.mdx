@@ -1,0 +1,76 @@
+# Event System
+
+An important part of the Kivy Hub flow is how events are handled. Events are usually processed in three steps:
+
+1. The user triggers a [global pose](/docs/user-manual/kivy-hub/interaction#global-poses) or a [touch](/docs/user-manual/kivy-hub/interaction#touches) either through the hand recognition system or by [using the mouse and keyboard](/docs/developer-documentation/kivy-hub/interaction/mouse-interaction) in the web environment.
+
+2. Through an event propagation function, all elements at the point where the event was triggered are gathered and sorted by z-index. For an element to be taken into consideration, it must have a `data-can-interact` prop in HTML containing a 3-bit mask (eg. 011), each digit allowing for a type of touch. For example, if an element has the mask 101, then it can get triggered by primary and tertiary touches. After the elements are sorted, the first one is taken and, through the JS event system, an event is triggered for that element. These events have props and types (enter and exit).
+
+3. The event is locally handled by the component.
+
+## Event types
+
+| Event name             | Description                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| "primary-touch-down"   | Triggered when a primary touch enters the area of the widget (this doesn't mean a primary touch gets triggered)     |
+| "primary-touch-up"     | Triggered when a primary touch exits the area of the widget                                                         |
+| "secondary-touch-down" | Triggered when a secondary touch enters the area of the widget (this doesn't mean a secondary touch gets triggered) |
+| "secondary-touch-up"   | Triggered when a secondary touch exits the area of the widget                                                       |
+| "tertiary-touch-down"  | Triggered when a tertiary touch enters the area of the widget (this doesn't mean a tertiary touch gets triggered)   |
+| "tertiatry-touch-up"   | Triggered when a tertiary touch exits the area of the widget                                                        |
+| "no-touch"             | Internally used as the state value if the widget isn't touched by any touch type                                    |
+
+## Event body
+
+The event contains a details prop with the following properties:
+
+| Name      | Optional | Description                                                    |
+| --------- | -------- | -------------------------------------------------------------- |
+| clientX   | no       | The X coordinate where the event was dispatched                |
+| clientY   | no       | The Y coordinate where the event was dispatched                |
+| type      | no       | Either "hand" or "mouse", based on how the event was triggered |
+| handIndex | yes      | Only for type = "hand"                                         |
+
+## Global Event Registry
+
+Apart from the default event handling inside Kivy, you may also manually register and remove functions from certain events that are globally managed separately from the rest.
+
+Currently, the only event available in the event registry is 'touch-move', which is triggered whenever the cursor or mouse moves.
+
+To get access to the event registry, check the using [input page](/docs/developer-documentation/kivy-hub/interaction/using-input#accessing-the-event-registry).
+
+### Mounting an Event
+
+```ts
+function myFunction(e) {
+  console.log("event-name triggered: ", e);
+}
+
+eventRegistry.on("event-name", myFunction);
+```
+
+### Dismounting an Event
+
+```ts
+eventRegistry.off("event-name", myFunction);
+```
+
+### Best Practice
+
+To ensure that all events are mounted and dismounted correctly, the best way to set up events in the event registry inside react components is by using an `useEffect` hook like so:
+
+```ts
+useEffect(() => {
+  function myFunction(e) {
+    console.log("event-name triggered: ", e);
+  }
+
+  eventRegistry.on("event-name", myFunction);
+
+  return () => {
+    eventRegistry.off("event-name", myFunction);
+  };
+}, []);
+```
+
+Use this snippet inside your react components.

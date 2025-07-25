@@ -7,8 +7,8 @@ export default {
   introduction: {
     title: 'Introduction'
   },
-  hardware: {
-    title: 'Hardware'
+  'kivy-hub': {
+    title: 'Kivy Hub'
   },
   'ai-research': {
     title: 'AI & Research'

@@ -1,0 +1,47 @@
+# Screen
+
+A screen represents a set of widgets grouped with a saved state. There can only be one screen mounted at a time. Each screen has an unique screen ID (string) and it can be mounted by that ID. The following screens are built-in Kivy Hub:
+
+| ID              | Component            |
+| --------------- | -------------------- |
+| `main`          | `HomeScreen`         |
+| `measure`       | `MeasureScreen`      |
+| `calibration`   | `CalibrationScreen`  |
+| `circle-cut`    | `CircleCutScreen`    |
+| `rectangle-cut` | `RectangleCutScreen` |
+
+You may add more screens in the `screen-context.tsx` file.
+
+There generally aren't any base components for screens however, it is preferred you use a `<div>` or similar element that spans the entire screen. A screen component should recieve an `active` boolean prop that dictates if it is visible or not. Here is an example:
+
+```tsx
+import { cn } from '@/lib/utils';
+
+export function NewScreen({ active }: { active: boolean }) {
+  return (
+    <div className={cn(!active && 'hidden')}>
+      {your code here}
+    </div>
+  );
+}
+```
+
+> [!CAUTION]
+>
+> If a screen holds persistent data, you should consider hiding it using styling (like in the given example). If you'd like the screen to reset every time you open it, you can hide it directly through ts, like here:
+
+```tsx
+import { cn } from '@/lib/utils';
+
+export function NewScreen({ active }: { active: boolean }) {
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <div>
+      {your code here}
+    </div>
+  );
+}
+```

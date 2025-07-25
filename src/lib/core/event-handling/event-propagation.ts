@@ -139,7 +139,6 @@ export function eventPropagation(
         handEvents[hoveredElementEvents.current.get(element)!] + '-up',
         handIndex
       );
-      console.log('Up 2');
       hoveredElementEvents.current.delete(element);
     }
   });

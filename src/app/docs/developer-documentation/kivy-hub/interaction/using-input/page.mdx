@@ -1,0 +1,165 @@
+# Input Context
+
+To have access to the different data provided by the user within code, Kivy Hub provides a general hook called `useHandTracking`. It provides multiple functions and sub hooks for almost all use cases.
+
+## Importing
+
+```ts
+import { useHandTracking } from 'kivy-hub/core';
+```
+
+## Accessing the MediaPipe Hand tracking Model
+
+You can access the MediaPipe model through the `handTracker` property:
+
+```ts
+const { handTracker } = useHandTracking();
+```
+
+## Getting the MediaPipe Model Status
+
+You can access the MediaPipe model through the `modelStatus` property:
+
+```ts
+const { modelStatus } = useHandTracking();
+```
+
+## Toggling Tracking and Hand Input
+
+The `toggleTracking` function provides an easy way to completely turn on / off the tracking performed by MediaPipe, completely disabling all input through hands:
+
+```ts
+const { toggleTracking } = useHandTracking();
+
+toggleTracking();
+```
+
+## Accessing Raw MediaPipe Data
+
+You can access raw MediaPipe data (the list of hands and landmarks) as a list of numbers directly through a `RefObject` called `rawLandMarksRef`:
+
+```ts
+const { rawLandmarksRef } = useHandTracking();
+```
+
+The raw landmarks are in three dimensions and have the following type:
+
+```ts
+import { RefObject } from 'react';
+interface NormalizedLandmark {
+  x: number;
+  y: number;
+  z: number;
+  visibility?: number;
+}
+
+type RawLandmarks = NormalizedLandmark[][];
+
+type RawLandmarksRef = RefObject<RawLandmarks>;
+```
+
+## Accessing Parsed Hand Data
+
+The parsed landmarks can be accessed as a `RefObject` called landmarksRef which is a list ofHandLandMarks:
+
+```ts
+const { landmarksRef } = useHandTracking();
+```
+
+```ts
+type LandmarkPoint = {
+  x: number;
+  y: number;
+};
+
+interface HandLandmarks {
+  wrist: LandmarkPoint;
+  thumb: {
+    cmc: LandmarkPoint;
+    mcp: LandmarkPoint;
+    ip: LandmarkPoint;
+    tip: LandmarkPoint;
+  };
+  index: {
+    mcp: LandmarkPoint;
+    pip: LandmarkPoint;
+    dip: LandmarkPoint;
+    tip: LandmarkPoint;
+  };
+  middle: {
+    mcp: LandmarkPoint;
+    pip: LandmarkPoint;
+    dip: LandmarkPoint;
+    tip: LandmarkPoint;
+  };
+  ring: {
+    mcp: LandmarkPoint;
+    pip: LandmarkPoint;
+    dip: LandmarkPoint;
+    tip: LandmarkPoint;
+  };
+  pinky: {
+    mcp: LandmarkPoint;
+    pip: LandmarkPoint;
+    dip: LandmarkPoint;
+    tip: LandmarkPoint;
+  };
+}
+```
+
+## Getting Current Hand Event Touch Type
+
+The touch type for all available hands can be accessed through the `handEventsRef` property which is a `RefObject`. It represents a list of HandEvent elements:
+
+```ts
+enum HandEvent {
+  NO_TOUCH = -1,
+  PRIMARY_TOUCH,
+  SECONDARY_TOUCH,
+  TERTIARY_TOUCH
+}
+```
+
+```ts
+const { handEventsRef } = useHandTracking();
+```
+
+## Getting Video Input
+
+To get video input from the camera, you can use the `videoRef` prop:
+
+```ts
+const { videoRef } = useHandTracking();
+```
+
+## Accessing the Event Registry
+
+You can access the [event registry](/docs/developer-documentation/kivy-hub/interaction/event-system#global-event-registry) through the `eventRegistryRef`.
+
+```ts
+const { eventRegistryRef } = useHandTracking();
+```
+
+## Getting the Mouse Position for the Web Interface
+
+Usually, to access the mouse position in a web environment you have to register a window event with mousemove and keep track of the mouse position yourself. Kivy provides a reference to the mouse position that can be accessed through the `mousePositionRef` prop:
+
+```ts
+const { mousePositionRef } = useHandTracking();
+```
+
+## Check If Tracking Is Running
+
+You can check if the tracking process is running through the `isTracking` prop:
+
+```ts
+const { isTracking } = useHandTracking();
+```
+
+## Check If the Camera Is On
+
+You can check if the camera is running through the `webcamRunning` prop:
+
+```ts
+const { webcamRunning } = useHandTracking();
+```

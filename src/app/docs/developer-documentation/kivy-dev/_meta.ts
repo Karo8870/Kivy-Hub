@@ -1,17 +1,19 @@
 import type { MetaRecord } from 'nextra';
 
 export default {
-  'overview': {
+  overview: {
     title: 'Overview'
   },
   'getting-started': {
     title: 'Getting Started'
   },
-  'pages': {
-    title: 'Pages'
+  pages: {
+    title: 'Pages',
+    display: 'hidden'
   },
-  'tutorials': {
-    title: 'Tutorials'
+  tutorials: {
+    title: 'Tutorials',
+    display: 'hidden'
   },
   'api-documentation': {
     title: 'API documentation'
