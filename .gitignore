@@ -43,3 +43,6 @@ next-env.d.ts
 # IDE
 .idea
 .vscode
+
+# Pagefind
+public/_pagefind

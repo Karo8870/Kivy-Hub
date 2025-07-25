@@ -22,7 +22,7 @@ export default async function ({ children }: { children: ReactNode }) {
       feedback={{
         content: ''
       }}
-      editLink={false}
+      editLink={null}
     >
       {children}
     </Layout>

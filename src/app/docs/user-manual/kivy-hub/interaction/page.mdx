@@ -1,0 +1,39 @@
+# Interaction
+
+Interaction with Kivy Hub is done only through hand recognition. While you may use multiple hands, we recommend using only one hand for interaction. Currently, there are two ways of giving input to Kivy Hub through your hands.
+
+## Touches
+
+You may have noticed that there is a colored dot following your hand around everywhere while you're moving around the work area. That circle is called a **cursor**, it can have three colors, each representing a different type of touch used to interact with **[widgets](/docs/user-manual/kivy-hub/widgets-and-moving-widgets)** as follows:
+
+1. Primary touch - blue (activates the primary action of a widget)
+
+2. Secondary touch - green (usually reserved for moving widgets but can do different things)
+
+3. Tertiary touch - yellow (usually activates a secondary action or opens a menu on a widget)
+
+The different types of touches are used to interact with the different widgets and tools within Kivy Hub. While there are a few guidelines, we recommend the primary touch is a main interaction, secondary touch moves the widget and tertiary touch is either disabled or activates some kind of menu or second action.
+
+A touch usually works in the following way: you first place your hand in the position corresponding to the touch you want to trigger. After the desired touch is triggered, move the cursor over the widget and hold it for a set amount of time (by default half a second) and after that the widget will trigger the specified action.
+
+> [!NOTE]
+>
+> When starting a touch action, don't have the cursor over the widget you want to interact with at first; otherwise the touch might be canceled. This was done to avoid accidental touches when the camera things you have briefly changed your hand position, even by accident.
+
+Kivy uses a system that tracks your hands using the camera and looks at where your hand is and how your fingers are positioned. Based on how you move them, you can trigger different kinds of touches. A primary touch is the default. It occurs when you point your index finger upwards and no other finger. A secondary touch is triggered when you get your thumb and index finger close together. It has the biggest priority, so it will override other touches. A tertiary touch occurs when you hold out your index and middle finger.
+
+Using these hand positions, you can trigger all three types of touches and interact with most of the Kivy Hub application.
+
+If you're interested in interacting with the web version of kivy, check out [mouse interaction](/docs/developer-documentation/hardware/interaction/mouse-interaction) in the developer documentation.
+
+## Global poses
+
+While the touch system covers 99% of the interaction you'll be doing, there might be times when you either can't interact directly because the hardware is not calibrated, or it is simply more convenient to do something without touches. For these cases, we use global poses.
+
+A global pose is a kind of predefined hand placement that you have to hold out for a set amount of time to trigger a global action, such as triggering the calibration menu or shutting down Kivy Hub.
+
+By default, the following global poses are defined:
+
+1. Calibration menu - hold your thumb forwards and have the rest of your fist closed.
+
+2. Shut down - make a rock sign perpendicular with the further side of the projection from you.

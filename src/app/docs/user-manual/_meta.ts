@@ -7,13 +7,14 @@ export default {
   introduction: {
     title: 'Introduction'
   },
-  hardware: {
-    title: 'Hardware'
+  'kivy-hub': {
+    title: 'Kivy Hub'
   },
   'kivy-app': {
     title: 'Kivy App'
   },
   website: {
-    title: 'Website'
+    title: 'Website',
+    display: 'hidden'
   }
 } as MetaRecord;

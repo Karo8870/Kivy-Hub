@@ -1,22 +1,22 @@
 import type { MetaRecord } from 'nextra';
 
 export default {
-  'introduction': {
+  introduction: {
     title: 'Introduction'
   },
-  'hardware-user-manual': {
-    title: 'Hardware User Manual'
+  'getting-started': {
+    title: 'Getting Started'
   },
-  'interaction': {
+  interaction: {
     title: 'Interaction'
   },
-  'moving-tools': {
-    title: 'Moving tools'
+  'widgets-and-moving-widgets': {
+    title: 'Widgets and Moving Widgets'
   },
-  'tools': {
+  tools: {
     title: 'Tools'
   },
-  'widgets': {
+  widgets: {
     title: 'Widgets'
   }
 } as MetaRecord;

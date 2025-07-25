@@ -1,0 +1,17 @@
+# Timer Widget
+
+The timer widget is a movable medium sized card that allows you to set a timer for a given duration. The timer has a name which you can see on the first line, a time left display, an expected finish time, displayed under time left after the timer has been started and two buttons. Timers show their progress through a bar that changes both width and color based on the progress to t = 0.
+
+![timer widget](/docs/timer-widget.png)
+
+## Adding a Timer
+
+To add a timer, first primary touch the [hub widget](/docs/user-manual/kivy-hub/widgets/hub-widget), then select the option with a timer on it. This should open a secondary menu where you have to pick the amount of time you want.
+
+## Using a Timer
+
+Every timer has two buttons that you can primary press. Their functionality changes based on the state of the timer. The first button will start the timer if it is stopped and will stop it if it is started. The second button will reset the timer if it has been started and stop it if it is running, and will delete the timer if it is reseted (no second passed on the timer).
+
+## Using Timer Stacks
+
+By default, all timers group in a stack for easier and more organized access. You can tertiary touch on the stack to collapse / expand them and access individual timers. The first timer in the stack is considered the main timer and will always be accessible. If the main timer is deleted, the one below it will become the main one.
