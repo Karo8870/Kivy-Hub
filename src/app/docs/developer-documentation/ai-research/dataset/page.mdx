@@ -1,0 +1,54 @@
+# Dataset
+
+To make the autoencoder model, we first need a clean and organized recipe dataset. For this task, we used the following [code](https://github.com/Kivy-Infoeducatie/Kivy-Research/blob/main/parsers/recipe-parser.ipynb). You can find a brief description of the processing we did in the code below.
+
+## Project Goal
+
+The code processes and merges two raw recipe datasets into a clean, unified dataset, enriched with parsed metadata and ingredients, and formatted for further analysis or model training (e.g., for recipe recommendation or nutrition prediction). USDA FoodData Central nutritional information was also integrated (outside of the shown code).
+
+## 1. Initial Cleaning of Recipes Dataset
+
+- Loaded `recipes.csv` and dropped unnecessary columns:
+- `AuthorId`, `TotalTime`, `AggregatedRating`, `ReviewCount`, `RecipeYield`
+- Parsed ISO 8601 duration fields (`CookTime`, `PrepTime`) into total minutes using the `extract_minutes` function.
+- Converted R-style list strings (e.g., `c("A", "B")`) into Python lists for:
+- `Keywords`
+- `RecipeInstructions`
+- `Images`
+- Normalized image links and instruction steps to structured lists.
+
+## 2. Parsing & Cleaning Ingredients Dataset
+
+- Loaded `recipes_ingredients.csv` and selected relevant columns:
+- `id`, `ingredients_raw`, `ingredients`, `serving_size`
+- Sorted by `id` and removed duplicate entries.
+- Used `parse_ingredient_string` to convert unstructured ingredient strings into dictionaries with:
+- `quantity`, `unit`, `unitQuantity`, `unitUnit`, `name`, `description`
+- Parsed the full ingredient list into structured lists of ingredient objects.
+
+## 3. Merging Datasets
+
+- Merged the recipes and ingredients datasets on `RecipeId` / `id`.
+- Filtered out rows that didn’t match the `1 (XXX g)` serving size format.
+- Extracted numeric grams from the `serving_size` string.
+- Renamed columns to use standardized names for downstream processing. Examples:
+- `Name` → `name`
+- `FatContent` → `total_fat`
+- `RecipeInstructions` → `steps`
+- `RecipeServings` → `servings`
+
+## 4. Final Serialization
+
+- Converted complex fields (`ingredients`, `images`, `steps`, `tags`) to JSON strings.
+- Saved the cleaned dataset as `output/parsed_recipes.csv`.
+
+## Final Output
+
+A structured and normalized recipe dataset with:
+- Minutes-based cooking/preparation time
+- Parsed ingredients and steps
+- Cleaned and structured tags, images
+- Consistent naming
+- Serving sizes in grams
+
+The dataset is now suitable for analysis, machine learning, or application development.

@@ -1,0 +1,43 @@
+# Getting Started
+
+This guide will help you set up and run the Kivy-Research project locally. It assumes you're using Python ≥ 3.8 and have basic familiarity with Python and virtual environments.
+
+## Requirements
+
+- Python 3.8+
+- pip
+- Git (to clone the repository)
+- (Optional) Virtual environment tool: `venv`, `virtualenv`, or `conda`
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Kivy-Infoeducatie/Kivy-Research.git
+cd Kivy-Research
+```
+
+### 2. Create a Virtual Environment
+
+**Using venv:**
+```bash
+python -m venv venv
+source venv/bin/activate      # On Windows: venv\Scripts\activate
+```
+
+**Using conda:**
+
+```bash
+conda create -n torch-env python=3.10
+conda activate torch-env
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+> Make sure PyTorch is installed correctly based on your system and whether you use GPU or CPU. You can install it manually from https://pytorch.org/get-started/locally if needed.
+
