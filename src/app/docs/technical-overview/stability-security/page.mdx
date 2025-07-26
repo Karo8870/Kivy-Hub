@@ -1,0 +1,52 @@
+# Stability and Security
+
+The Kivy project was built with security and reliability as foundational principles, ensuring user trust and data protection across all platforms: iOS, web, and desktop.
+
+## Application Security
+
+- The iOS app, developed in SwiftUI, is tightly integrated with the Apple ecosystem, benefiting from its advanced security features:
+- Sandbox isolation prevents unauthorized access to app data.
+- Biometric authentication (Face ID / Touch ID) ensures secure user verification.
+- Keychain integration enables encrypted storage of sensitive user credentials.
+
+---
+
+- All communication between the frontend and backend occurs over encrypted HTTPS connections.
+- The backend API, built with NestJS, is protected by:
+- JWT-based authentication with short-lived tokens.
+- Rate limiting to mitigate abuse and denial-of-service attempts.
+- CORS restrictions and access control mechanisms to prevent unauthorized access.
+
+---
+
+- The backend is hosted on a secure, access-restricted server that is actively monitored. Critical data is stored in a hardened database, following current security best practices:
+- User passwords are hashed using bcrypt with 10 rounds of salting, making brute-force attacks computationally impractical.
+- Protection against common web threats such as:
+- SQL Injection
+- Cross-Site Scripting (XSS)
+- Cross-Site Request Forgery (CSRF)
+
+---
+
+- Both the frontend and backend handle errors and exceptions in a standardized manner, returning appropriate status codes and messages while avoiding information leaks.
+
+## Testing and Stability
+
+To ensure a stable and high-quality product, we adopted a comprehensive testing strategy covering both functional and non-functional aspects:
+
+- End-to-end (E2E) testing was implemented on the backend to automatically verify critical flows and inter-component communication.
+- Manual testing was performed on all major platforms (iOS, web, desktop, and backend) to validate real-world behavior and user interactions.
+- API endpoints were rigorously tested using Postman collections to ensure robustness and consistency across various usage scenarios.
+
+### Non-functional Testing Highlights:
+
+- Performance and scalability testing in isolated environments helped simulate high-traffic scenarios and critical service failures (e.g., network outages, database disconnections).
+- Cross-platform compatibility was validated across multiple hardware configurations to ensure seamless operation in both high-end and resource-constrained environments.
+
+### Automation and Quality Assurance:
+
+- A large portion of the testing process is automated through test scripts, enabling rapid validation of application stability after each code change.
+- All bugs, test results, and QA feedback were tracked and managed within Jira, ensuring issues were documented, prioritized, and resolved efficiently.
+- The structured QA pipeline ensured the development process remained predictable, repeatable, and quality-focused.
+
+By integrating modern security practices with thorough testing and quality assurance workflows, we have built a resilient and secure application architecture — one that is ready for production use and scalable future development.

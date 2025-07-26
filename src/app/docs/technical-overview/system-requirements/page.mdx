@@ -1,0 +1,50 @@
+# System Requirements
+
+## Mobile Application
+
+To run the Kivy mobile app, users need a compatible Apple device with the following minimum system requirements:
+
+- **Supported devices**: iPhone, iPad, Apple Vision Pro, or Mac (Apple Silicon or Intel-based)
+- **Operating systems**:
+- iOS 18.0 or later
+- iPadOS 18.0 or later
+- visionOS 2.0 or later
+- macOS 15.0 or later (for Catalyst compatibility)
+- **Connectivity**: An active internet connection is required for accessing online features such as syncing data, retrieving personalized recommendations, and performing AI-based operations.
+- **Storage**: Minimum of 100 MB of free disk space.
+- **Permissions**:
+- **Camera access** (used for scanning ingredients, recognizing gestures, or using the visual meal tracker)
+- **Health data access** (used to personalize nutrition and activity tracking via HealthKit)
+
+> The app is optimized for Apple devices only and is distributed via the App Store or TestFlight during the development phase.
+
+## Web Application
+
+The Kivy web interface is lightweight and designed to run smoothly on any modern device with minimal system requirements. It is fully responsive and accessible from desktops, tablets, and smartphones.
+
+- **CPU usage**: Very low, as the site primarily serves static assets (HTML, CSS, JavaScript)
+- **RAM usage**: Typically under **150 MB** in modern browsers (Chrome, Firefox, Safari, Edge)
+- **Compatibility**: Fully functional on any browser that supports ES6, CSS Grid/Flexbox, and modern DOM APIs
+- **Performance**: The application is optimized for fast loading times, with minimal impact on device performance, even on older systems with limited resources
+
+> Ideal for quick access to recipes, educational resources, and managing your Kivy Hub remotely.
+
+## Hardware Component (Kivy Hub) – Software Interface
+
+For running the software that controls the hardware component (Kivy Hub) via a browser-based or desktop interface, the following setup is recommended to ensure optimal performance:
+
+- **CPU**: Quad-core or better (Intel i5 / Apple M1 / AMD Ryzen equivalent)
+- **RAM**: Minimum **4 GB** (8 GB or more recommended for heavy usage)
+- **GPU**: Integrated or dedicated GPU for local video processing and WebGL acceleration
+- **Browser**: Latest version of **Google Chrome**, **Microsoft Edge**, or **Mozilla Firefox** with support for:
+- **WebAssembly**
+- **WebGL**
+- **MediaStream API** (for webcam access)
+- **Internet Connection**: Stable connection required for real-time communication with the backend APIs and AI services
+- **Permissions**:
+- **Webcam access**: Required for gesture recognition and live interaction
+- **Microphone access** *(optional)*: For future voice control features
+
+> The Kivy Hub web app processes real-time video input locally to minimize latency and maximize responsiveness, making a capable hardware setup essential for smooth interaction.
+
+For all components of the Kivy system, we prioritize cross-device compatibility, low resource consumption, and accessibility — ensuring that users can interact with our ecosystem seamlessly across platforms.

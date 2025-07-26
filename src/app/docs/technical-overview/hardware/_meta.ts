@@ -4,13 +4,16 @@ export default {
   'getting-started': {
     title: 'Getting Started'
   },
-  'structure': {
+  structure: {
     title: 'Structure'
   },
   'software-architecture': {
     title: 'Software Architecture'
   },
-  'technologies': {
+  homography: {
+    title: 'Homography'
+  },
+  technologies: {
     title: 'Technologies'
   }
 } as MetaRecord;

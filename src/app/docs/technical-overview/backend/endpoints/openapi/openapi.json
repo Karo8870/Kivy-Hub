@@ -1,0 +1,1647 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/account": {
+      "get": {
+        "operationId": "AccountController_findOwn",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Account"
+        ]
+      },
+      "patch": {
+        "operationId": "AccountController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAccountDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Account"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "Performs authentication and returns a JWT token if successful",
+        "operationId": "AuthController_organizationLogin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Login",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "description": "Verifies email and username uniqueness and creates an account",
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Register",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/dietary-plan/target": {
+      "get": {
+        "operationId": "DietaryPlanController_getTarget",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      }
+    },
+    "/dietary-plan/log": {
+      "get": {
+        "operationId": "DietaryPlanController_getLogs",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      },
+      "post": {
+        "operationId": "DietaryPlanController_logCalories",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogCaloriesDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      }
+    },
+    "/dietary-plan/log/recipe/{id}": {
+      "post": {
+        "operationId": "DietaryPlanController_logRecipe",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      }
+    },
+    "/dietary-plan": {
+      "post": {
+        "operationId": "DietaryPlanController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDietaryPlanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      },
+      "get": {
+        "operationId": "DietaryPlanController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      }
+    },
+    "/dietary-plan/{id}": {
+      "get": {
+        "operationId": "DietaryPlanController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      },
+      "patch": {
+        "operationId": "DietaryPlanController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDietaryPlanDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      },
+      "delete": {
+        "operationId": "DietaryPlanController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "DietaryPlan"
+        ]
+      }
+    },
+    "/recipe": {
+      "post": {
+        "operationId": "RecipeController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRecipeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      },
+      "get": {
+        "operationId": "RecipeController_findMany",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      }
+    },
+    "/recipe/search": {
+      "post": {
+        "operationId": "RecipeController_search",
+        "parameters": [
+          {
+            "name": "cursor",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchRecipeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      }
+    },
+    "/recipe/recommend": {
+      "get": {
+        "operationId": "RecipeController_recommend",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      }
+    },
+    "/recipe/liked": {
+      "get": {
+        "operationId": "RecipeController_getLikedRecipes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      }
+    },
+    "/recipe/featured": {
+      "get": {
+        "operationId": "RecipeController_getFeaturedRecipes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      }
+    },
+    "/recipe/{id}": {
+      "get": {
+        "operationId": "RecipeController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      },
+      "patch": {
+        "operationId": "RecipeController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRecipeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      },
+      "delete": {
+        "operationId": "RecipeController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Recipe"
+        ]
+      }
+    },
+    "/post": {
+      "post": {
+        "operationId": "PostController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Post"
+        ]
+      },
+      "get": {
+        "operationId": "PostController_findMany",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Post"
+        ]
+      }
+    },
+    "/post/{id}": {
+      "patch": {
+        "operationId": "PostController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Post"
+        ]
+      },
+      "delete": {
+        "operationId": "PostController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Post"
+        ]
+      }
+    },
+    "/recipe/{id}/like": {
+      "post": {
+        "operationId": "RecipeLikeController_like",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "RecipeLike"
+        ]
+      },
+      "delete": {
+        "operationId": "RecipeLikeController_unlike",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "RecipeLike"
+        ]
+      }
+    },
+    "/post/{id}/like": {
+      "post": {
+        "operationId": "PostLikeController_like",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "PostLike"
+        ]
+      },
+      "delete": {
+        "operationId": "PostLikeController_unlike",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "PostLike"
+        ]
+      }
+    },
+    "/preferences": {
+      "get": {
+        "operationId": "PreferencesController_findOne",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Preferences"
+        ]
+      },
+      "patch": {
+        "operationId": "PreferencesController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePreferenceDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Preferences"
+        ]
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "operationId": "UserController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
+    "/user/{id}/follow": {
+      "post": {
+        "operationId": "FollowController_follow",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Follow"
+        ]
+      },
+      "delete": {
+        "operationId": "FollowController_unfollow",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Follow"
+        ]
+      }
+    },
+    "/intelligence/scan-to-create": {
+      "post": {
+        "operationId": "IntelligenceController_scanToCreateRecipe",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanToCreateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Intelligence"
+        ]
+      }
+    },
+    "/intelligence/scan-to-log": {
+      "post": {
+        "operationId": "IntelligenceController_scanToLogMeal",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScanToLogDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Intelligence"
+        ]
+      }
+    },
+    "/intelligence/modify-recipe/{id}": {
+      "post": {
+        "operationId": "IntelligenceController_modifyRecipe",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModifyRecipeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Intelligence"
+        ]
+      }
+    },
+    "/intelligence/chat": {
+      "post": {
+        "operationId": "ChatController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      },
+      "get": {
+        "operationId": "ChatController_findMany",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      }
+    },
+    "/intelligence/chat/{id}": {
+      "post": {
+        "operationId": "ChatController_sendMessage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      },
+      "get": {
+        "operationId": "ChatController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      },
+      "delete": {
+        "operationId": "ChatController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      }
+    },
+    "/intelligence/chat/regenerate/{id}": {
+      "patch": {
+        "operationId": "ChatController_regenerateResponse",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      }
+    },
+    "/intelligence/chat/edit/{id}": {
+      "patch": {
+        "operationId": "ChatController_editMessage",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MessageDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      }
+    },
+    "/intelligence/chat/rename/{id}": {
+      "patch": {
+        "operationId": "ChatController_renameChat",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameChatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Chat"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "NutriBack API",
+    "description": "The API endpoints and descriptions of the NutriBack API",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "UpdateAccountDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the user",
+            "example": "user@example.com"
+          },
+          "username": {
+            "type": "string",
+            "description": "Unique username for the user, must follow specific constraints",
+            "example": "john_doe",
+            "minLength": 3,
+            "maxLength": 40
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of the user",
+            "example": "John",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user",
+            "example": "Doe",
+            "minLength": 1,
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "email",
+          "username",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the user",
+            "example": "user@example.com"
+          },
+          "username": {
+            "type": "string",
+            "description": "Unique username for the user, must follow specific constraints",
+            "example": "john_doe",
+            "minLength": 3,
+            "maxLength": 40
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name of the user",
+            "example": "John",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name of the user",
+            "example": "Doe",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "password": {
+            "type": "string",
+            "description": "Password for the user account. Must meet strong password requirements.",
+            "example": "StrongP@ssw0rd!",
+            "minLength": 8,
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "email",
+          "username",
+          "firstName",
+          "lastName",
+          "password"
+        ]
+      },
+      "LogCaloriesDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateDietaryPlanDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateDietaryPlanDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "IngredientDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the ingredient",
+            "example": "Flour"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit of measurement",
+            "example": "grams"
+          },
+          "quantity": {
+            "type": "string",
+            "description": "Quantity of the ingredient",
+            "example": "500"
+          }
+        },
+        "required": [
+          "name",
+          "unit",
+          "quantity"
+        ]
+      },
+      "CreateRecipeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the recipe",
+            "example": "Chocolate Cake"
+          },
+          "tags": {
+            "description": "Tags associated with the recipe",
+            "example": [
+              "dessert",
+              "chocolate"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "steps": {
+            "description": "Steps to prepare the recipe",
+            "example": [
+              "Mix ingredients",
+              "Bake at 180°C for 30 minutes"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the recipe",
+            "example": "A rich and moist chocolate cake perfect for dessert.",
+            "minLength": 3,
+            "maxLength": 2000
+          },
+          "ingredients": {
+            "description": "List of ingredients required for the recipe",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IngredientDto"
+            }
+          },
+          "preparationTime": {
+            "type": "number",
+            "description": "Preparation time in minutes",
+            "example": 20
+          },
+          "cookingTime": {
+            "type": "number",
+            "description": "Cooking time in minutes",
+            "example": 30
+          },
+          "servings": {
+            "type": "number",
+            "description": "Number of servings",
+            "example": 4
+          },
+          "calories": {
+            "type": "number",
+            "description": "Calories per serving",
+            "example": 500
+          },
+          "totalFat": {
+            "type": "number",
+            "description": "Total fat content per serving in grams",
+            "example": 20
+          },
+          "sugar": {
+            "type": "number",
+            "description": "Sugar content per serving in grams",
+            "example": 10
+          },
+          "sodium": {
+            "type": "number",
+            "description": "Sodium content per serving in milligrams",
+            "example": 150
+          },
+          "protein": {
+            "type": "number",
+            "description": "Protein content per serving in grams",
+            "example": 5
+          },
+          "saturatedFat": {
+            "type": "number",
+            "description": "Saturated fat content per serving in grams",
+            "example": 8
+          },
+          "carbohydrates": {
+            "type": "number",
+            "description": "Carbohydrates content per serving in grams",
+            "example": 70
+          },
+          "fiber": {
+            "type": "number",
+            "description": "Fiber content per serving in grams",
+            "example": 5
+          },
+          "cholesterol": {
+            "type": "number",
+            "description": "Cholesterol content per serving in milligrams",
+            "example": 40
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the recipe",
+            "example": "medium",
+            "enum": [
+              "easy",
+              "medium",
+              "hard"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "tags",
+          "steps",
+          "description",
+          "ingredients",
+          "preparationTime",
+          "cookingTime",
+          "servings",
+          "calories",
+          "totalFat",
+          "sugar",
+          "sodium",
+          "protein",
+          "saturatedFat",
+          "carbohydrates",
+          "fiber",
+          "cholesterol",
+          "difficulty"
+        ]
+      },
+      "SearchRecipeDto": {
+        "type": "object",
+        "properties": {
+          "minCalories": {
+            "type": "number",
+            "description": "Minimum calories",
+            "example": 100
+          },
+          "maxCalories": {
+            "type": "number",
+            "description": "Maximum calories",
+            "example": 2000
+          },
+          "minTotalFat": {
+            "type": "number",
+            "description": "Minimum total fat",
+            "example": 10
+          },
+          "maxTotalFat": {
+            "type": "number",
+            "description": "Maximum total fat",
+            "example": 100
+          },
+          "minSugar": {
+            "type": "number",
+            "description": "Minimum sugar",
+            "example": 5
+          },
+          "maxSugar": {
+            "type": "number",
+            "description": "Maximum sugar",
+            "example": 50
+          },
+          "minSodium": {
+            "type": "number",
+            "description": "Minimum sodium",
+            "example": 500
+          },
+          "maxSodium": {
+            "type": "number",
+            "description": "Maximum sodium",
+            "example": 2000
+          },
+          "minProtein": {
+            "type": "number",
+            "description": "Minimum protein",
+            "example": 20
+          },
+          "maxProtein": {
+            "type": "number",
+            "description": "Maximum protein",
+            "example": 150
+          },
+          "minSaturatedFat": {
+            "type": "number",
+            "description": "Minimum saturated fat",
+            "example": 2
+          },
+          "maxSaturatedFat": {
+            "type": "number",
+            "description": "Maximum saturated fat",
+            "example": 20
+          },
+          "minCarbohydrates": {
+            "type": "number",
+            "description": "Minimum carbohydrates",
+            "example": 50
+          },
+          "maxCarbohydrates": {
+            "type": "number",
+            "description": "Maximum carbohydrates",
+            "example": 300
+          },
+          "minFiber": {
+            "type": "number",
+            "description": "Minimum fiber",
+            "example": 5
+          },
+          "maxFiber": {
+            "type": "number",
+            "description": "Maximum fiber",
+            "example": 50
+          },
+          "minCholesterol": {
+            "type": "number",
+            "description": "Minimum cholesterol",
+            "example": 50
+          },
+          "maxCholesterol": {
+            "type": "number",
+            "description": "Maximum cholesterol",
+            "example": 300
+          },
+          "minSteps": {
+            "type": "number",
+            "description": "Minimum number of steps",
+            "example": 3
+          },
+          "maxSteps": {
+            "type": "number",
+            "description": "Maximum number of steps",
+            "example": 10
+          },
+          "minPreparationTime": {
+            "type": "number",
+            "description": "Minimum preparation time in minutes",
+            "example": 10
+          },
+          "maxPreparationTime": {
+            "type": "number",
+            "description": "Maximum preparation time in minutes",
+            "example": 120
+          },
+          "minCookingTime": {
+            "type": "number",
+            "description": "Minimum cooking time in minutes",
+            "example": 20
+          },
+          "maxCookingTime": {
+            "type": "number",
+            "description": "Maximum cooking time in minutes",
+            "example": 180
+          },
+          "minDate": {
+            "type": "string",
+            "description": "Earliest date for the recipe",
+            "example": "2025-01-01"
+          },
+          "maxDate": {
+            "type": "string",
+            "description": "Latest date for the recipe",
+            "example": "2025-12-31"
+          },
+          "tags": {
+            "description": "List of tags",
+            "example": [
+              "vegetarian",
+              "gluten-free"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "difficulty": {
+            "description": "List of difficulties",
+            "example": [
+              "easy",
+              "medium"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "offset": {
+            "type": "number",
+            "description": "Pagination offset",
+            "example": 0
+          },
+          "search": {
+            "type": "string",
+            "description": "Search term",
+            "example": "chocolate cake"
+          }
+        }
+      },
+      "UpdateRecipeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the recipe",
+            "example": "Chocolate Cake"
+          },
+          "tags": {
+            "description": "Tags associated with the recipe",
+            "example": [
+              "dessert",
+              "chocolate"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "steps": {
+            "description": "Steps to prepare the recipe",
+            "example": [
+              "Mix ingredients",
+              "Bake at 180°C for 30 minutes"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the recipe",
+            "example": "A rich and moist chocolate cake perfect for dessert.",
+            "minLength": 3,
+            "maxLength": 2000
+          },
+          "ingredients": {
+            "description": "List of ingredients required for the recipe",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IngredientDto"
+            }
+          },
+          "preparationTime": {
+            "type": "number",
+            "description": "Preparation time in minutes",
+            "example": 20
+          },
+          "cookingTime": {
+            "type": "number",
+            "description": "Cooking time in minutes",
+            "example": 30
+          },
+          "servings": {
+            "type": "number",
+            "description": "Number of servings",
+            "example": 4
+          },
+          "calories": {
+            "type": "number",
+            "description": "Calories per serving",
+            "example": 500
+          },
+          "totalFat": {
+            "type": "number",
+            "description": "Total fat content per serving in grams",
+            "example": 20
+          },
+          "sugar": {
+            "type": "number",
+            "description": "Sugar content per serving in grams",
+            "example": 10
+          },
+          "sodium": {
+            "type": "number",
+            "description": "Sodium content per serving in milligrams",
+            "example": 150
+          },
+          "protein": {
+            "type": "number",
+            "description": "Protein content per serving in grams",
+            "example": 5
+          },
+          "saturatedFat": {
+            "type": "number",
+            "description": "Saturated fat content per serving in grams",
+            "example": 8
+          },
+          "carbohydrates": {
+            "type": "number",
+            "description": "Carbohydrates content per serving in grams",
+            "example": 70
+          },
+          "fiber": {
+            "type": "number",
+            "description": "Fiber content per serving in grams",
+            "example": 5
+          },
+          "cholesterol": {
+            "type": "number",
+            "description": "Cholesterol content per serving in milligrams",
+            "example": 40
+          },
+          "difficulty": {
+            "type": "string",
+            "description": "Difficulty level of the recipe",
+            "example": "medium",
+            "enum": [
+              "easy",
+              "medium",
+              "hard"
+            ]
+          }
+        }
+      },
+      "CreatePostDto": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Rating given to the recipe, between 1 and 5",
+            "example": 4,
+            "minimum": 1,
+            "maximum": 5
+          },
+          "recipeID": {
+            "type": "number",
+            "description": "ID of the recipe being rated",
+            "example": 123
+          },
+          "content": {
+            "type": "string",
+            "description": "Content of the post / review",
+            "example": "This recipe was amazing! I loved the flavors and the simplicity of preparation.",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "rating",
+          "recipeID",
+          "content"
+        ]
+      },
+      "UpdatePostDto": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "Rating given to the recipe, between 1 and 5",
+            "example": 4,
+            "minimum": 1,
+            "maximum": 5
+          },
+          "content": {
+            "type": "string",
+            "description": "Content of the post / review",
+            "example": "This recipe was amazing! I loved the flavors and the simplicity of preparation.",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "required": [
+          "rating",
+          "content"
+        ]
+      },
+      "UpdatePreferenceDto": {
+        "type": "object",
+        "properties": {
+          "activityLevel": {
+            "type": "number",
+            "description": "Activity level (numerical value)",
+            "example": 3
+          },
+          "gender": {
+            "type": "string",
+            "description": "Gender of the user",
+            "example": "male",
+            "enum": [
+              "male",
+              "female"
+            ]
+          },
+          "age": {
+            "type": "number",
+            "description": "Age of the user",
+            "example": 25,
+            "minimum": 0,
+            "maximum": 140
+          },
+          "weight": {
+            "type": "number",
+            "description": "Weight of the user in kilograms",
+            "example": 70
+          },
+          "height": {
+            "type": "number",
+            "description": "Height of the user in centimeters",
+            "example": 175
+          },
+          "diet": {
+            "type": "string",
+            "description": "Dietary preference of the user",
+            "example": "vegetarian",
+            "enum": [
+              "no_diet",
+              "vegetarian",
+              "vegan",
+              "pescatarian"
+            ]
+          },
+          "allergens": {
+            "description": "List of allergens",
+            "example": [
+              "nuts",
+              "gluten"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "gender",
+          "age",
+          "diet",
+          "allergens"
+        ]
+      },
+      "ScanToCreateDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "ScanToLogDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "ModifyRecipeDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "MessageDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "RenameChatDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}

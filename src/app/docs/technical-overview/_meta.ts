@@ -7,6 +7,9 @@ export default {
   introduction: {
     title: 'Introduction'
   },
+  summary: {
+    title: 'Summary'
+  },
   hardware: {
     title: 'Hardware'
   },
@@ -34,8 +37,8 @@ export default {
   versioning: {
     title: 'Versioning'
   },
-  'business-plan': {
-    title: 'Business Plan'
+  business: {
+    title: 'Business'
   },
   'project-management': {
     title: 'Project Management'

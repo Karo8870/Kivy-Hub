@@ -1,0 +1,207 @@
+# Summary
+
+As technology continues to shape the way we live, the kitchen is beginning to evolve from a purely manual space to one where intelligent assistance can bring real value. Here, we present four major contributions to the field.
+
+First, we introduce a new, processed, structured and filtered dataset containing over 500,000 recipes from Food.com and RecipeNLG in a standardized, information-rich format enhanced with nutritional information for ingredients from the USDA Food Data Central and Open Food Facts. These include well-defined ingredient lists, step-by-step instructions, titles and metadata such as culinary specifics and dietary labels. This dataset provides a diverse, high-quality and reproducible foundation for future research in the field.
+
+Second, we propose an innovative architecture based on autoencoders that “learns” numerical representations of culinary recipes. These embeddings capture both the meaning, structure and functionality of recipes. Our model is able to reconstruct complete recipes from these compact yet information-rich representations. We demonstrate their efficiency in several practical applications, such as vector operations, recipe classification and grouping and even recipe generation.
+
+Third, we present a functional hardware component of a smart kitchen assistant that integrates a projector and a camera to transform any flat surface into an interactive workspace. The hardware component includes numerous useful kitchen tools, such as recipe viewers, cutting contours, measurements and more.
+
+We also extend the functionality of the system with a fully integrated mobile application that combines nutritional monitoring with AI-assisted recipe personalization. The app allows users to track their health goals, receive dynamic meal recommendations tailored to their dietary preferences and interact on a social recipe sharing platform. By integrating health data, culinary personalization and community features, the mobile app connects the various components of the project, reinforcing Kivy’s goal of providing a complete, adaptive ecosystem for smart cooking and nutritional management.
+
+## Hardware
+
+The system hardware (also known as **Kivy Hub**) consists of a HY320 projector and a video camera mounted on a fixed, adaptable wall or kitchen cabinet mount. The projector displays the user interface on flat surfaces, such as countertops or tables, effectively transforming them into interactive workspaces. The camera captures user gestures, allowing interaction with the projection. Processing is performed by a Raspberry Pi 5, chosen for its small size and low power consumption. It connects to the projector and camera via wired or wireless connections and performs all calculations locally (gesture recognition, image processing and interface rendering), ensuring the system works without internet access. This makes the system ideal for kitchens, classrooms or other environments that require hands-free digital interaction, with the product having the potential to be developed in many other directions.
+
+Interaction is enabled by hand tracking using MediaPipe, which accurately detects hand positions and movements in real time. To map these gestures onto the projected interface, the system applies a homography transformation. This ensures that the user’s movements correspond exactly to the displayed elements, allowing for intuitive and spatially aligned control.
+
+Details about the mathematics behind the homography can be found in [here](/docs/technical-overview/hardware/homography).
+
+The software component of the system is a web application developed using Tauri, React, Tailwind CSS and Vite, designed to run locally on a Raspberry Pi (We want to move the project to Godot in the future). It serves as the main user interface, allowing interaction through hand gestures instead of physical touch, providing a completely hands-free experience.
+
+Gesture recognition is performed by MediaPipe, which processes the video stream to identify hand positions. This ensures that the gestures align perfectly with the interactive elements displayed on the work surface.
+
+To support gesture-based interaction, a set of custom primitive components was developed in React. These components can detect actions such as taps, swipes or holding a finger in a fixed position, forming the basis for more complex interactive widgets.
+
+The app's core features include a kitchen timer, measuring tool, interactive cutting guides, an AI Hub for intelligent assistance and a recipe viewer adapted for hands-free operation. Together, these features create an intuitive and accessible interactive environment, effectively transforming any kitchen surface into a smart digital platform.
+
+## Mobile Application
+
+The Kivy ecosystem also comes with a mobile nutrition app that integrates artificial intelligence to help users adopt a healthier lifestyle. The app combines traditional nutritional tracking features with an AI-powered recipe recommendation system. It is fully integrated into the extensive Kivy ecosystem, which includes hardware components and AI models.
+
+The app emphasizes accessibility and customization, being structured into five main sections:
+
+### 1. Customizable Dashboard (Home Tab)
+
+The main interface functions as an interactive and modular dashboard. Users can add, remove and rearrange widgets of different sizes (small, medium, large) to adapt the display to their personal health goals. Key features include:
+
+- visual progress indicators for daily metrics like calories, steps and distance
+- a daily recipe suggestion for culinary inspiration
+- personalized recommendations based on nutritional preferences
+- an AI nutritional assistant capable of answering dietary questions and generating meal plans
+- and a shopping list that consolidates ingredients in selected recipes.
+
+### 2. Recipes and Social Network (Recipes Tab)
+
+This section transforms the app into a social culinary platform. Users can explore recipes shared by the community or taken from external sources. Each recipe is presented with clear details and interactive step-by-step guidance. Additional features include commenting and interacting with recipes, saving favorites for quick access, automatically generating shopping lists from ingredients and creating personalized recipes through an intuitive visual editor.
+
+### 3. Goals Tracking (Goals Tab)
+
+Dedicated to tracking health progress, this section supports automatic synchronization with Apple HealthKit, as well as manual data entry. Users can monitor daily calorie intake, steps taken, distance traveled and trends over time in physical indicators. The app also calculates personalized daily calorie needs based on user data such as age, weight, height and activity level.
+
+### 4. Advanced Search (Search Screen)
+
+The search function allows for quick and efficient search for recipes in the app’s database. Users can enter the name of a dish or keywords, filtering results by food preferences, ingredients or popularity to quickly find the desired options.
+
+### 5. Personalization and Settings (Settings Screen)
+
+This section allows users to configure the entire app experience. Settings include defining food preferences, allergies and diets; updating personal data; managing permissions such as Apple HealthKit access and notifications; and adjusting interface elements and functionality to best meet individual needs
+
+### 6. Conclusion
+
+By integrating these functionalities, Kivy provides an intelligent, user-centric platform for nutrition management and culinary exploration, supporting healthier habits through adaptive AI and community engagement.
+
+## Website
+
+To host documentation, software, hardware in a web environment without the need for a physical component, a presentation page and much more, we created a minimalist website.
+
+More details about the website can be found [here](/docs/technical-overview/website/introduction).
+
+## Research Paper and Vector Representations
+
+The most important part of the Kivy project is the research paper. This explains how we developed an autoencoder neural network architecture (i.e. a network that tries to learn numerical representations of culinary recipes by transforming them into that vector and then trying to build the original recipe from that numerical representation).
+
+In the paper, we detailed the identified problem, the purpose, objectives, construction and content of a dataset of 500.000 culinary recipes, the network architecture and the mathematics behind it and possible real-life uses of the architecture.
+
+The research paper can be found [here](/docs/research/introduction).
+
+## Kivy Dev
+
+To allow anyone access to the various AI models and data within the Kivy ecosystem, we allow developers to interact with our services through a paid, token-based API called Kivy Dev.
+
+More details about Kivy Dev can be found [here](/docs/technical-overview/kivy-dev/introduction).
+
+## Business Plan
+
+The business plan can be found [here](/docs/technical-overview/business/introduction).
+
+The document details the market analysis, product structure (hardware and software), business model, financing sources, expansion strategy, pricing, distribution and promotion policy, as well as economic parameters and SWOT analysis.
+
+## Planning, Organizing and Implementing
+
+### 1. Application Stability
+
+All three software components, the iOS app, the website built in Next.js and the desktop app built with Tauri, were developed with a focus on optimization. The iOS app uses lazy loading and local caching to reduce network and CPU usage and the web app is server-side rendered with Next.js to reduce the load on the user's device. The Tauri version takes advantage of the low resource consumption, providing an energy-efficient and fast alternative compared to Electron solutions, occupying significantly less RAM and CPU.
+
+The project was rigorously tested to prevent memory leaks, both by auditing the code and by monitoring the application's behavior during prolonged use. The iOS app is highly efficient thanks to SwiftUI’s tight integration with the Apple ecosystem, which enables low resource consumption, natively optimized performance and seamless compatibility with system features such as smooth animations, hardware access and full accessibility support. The website is built with modern React and Next.js practices, which avoid unnecessary object retention. The Tauri app, using Rust at the core, benefits from strict memory management, which significantly reduces the risk of such issues.
+
+During testing on various platforms, the app did not cause significant slowdowns or system overload. Interfaces are responsive, resource loading is done asynchronously and only when needed and background processes are limited to not overly consume CPU or battery. On mobile, the iOS app integrates seamlessly with the system’s battery saving policies. On desktop, the Tauri app starts quickly and has minimal impact on overall performance, thanks to compact binaries and efficient use of native resources.
+
+### 2. Application Security
+
+The application was developed with a strong focus on security, covering all three main components. The iOS application, made in SwiftUI, is tightly integrated with the Apple ecosystem, automatically benefiting from the advanced levels of security offered by the platform, such as application isolation in sandbox, biometric authentication and Keychain for secure storage of sensitive data. Communication with the backend is carried out exclusively through encrypted HTTPS connections and the API is protected by robust authentication mechanisms (JWT token and rate limiting). The backend is hosted on a secure server, with restricted access and constantly monitored. The database follows modern security standards. User passwords are encrypted with the bcrypt algorithm, using 10 rounds of salting, which makes them practically impossible to crack using brute-force methods. In addition, protection measures have been implemented against common attacks, such as SQL injection, XSS and CSRF, thus ensuring the confidentiality, integrity and availability of user data. All errors and exceptions have corresponding messages and responses on both the frontend and backend according to each error according to current standards.
+
+### 3. Testing
+
+To ensure the stability and quality of the application, we applied a comprehensive testing approach, covering both functional and non-functional testing. At the backend (NestJS) level, we implemented end-to-end (e2e) testing to automatically verify critical flows and the integrity of communication between components. In parallel, all major functionalities were also manually verified on each platform (iOS, web, desktop and backend with Postman) to detect any errors in the real behavior of the application.
+
+Non-functional testing included evaluating performance and scalability in an isolated environment, where real conditions of intense use and failures of critical services (network outages, lack of database connection, etc.) were simulated. We also tested the portability of the application on different platforms and hardware configurations, ensuring that the application works fluently regardless of the environment.
+
+The testing process is largely automated, through test scripts, which allows us to quickly validate the stability of the application with each change made to the code. For efficient task management and bug tracking, we used Jira, where each identified issue was documented and handled accordingly. Thus, the entire development process was organized, repeatable and quality-oriented.
+
+### 4. Application Maturity
+
+The application is at an advanced stage of maturity, already aligned with the needs of the target audience and available for real use. The version is tested by users in TestFlight and the web version is online and fully functional. The backend is hosted and operational, successfully managing user traffic and data. The only component still in the prototype stage is the interactive hardware system, which is to be refined before the commercial launch.
+
+### 5. UI and UX
+
+The application interface was designed with a focus on simplicity, clarity and accessibility, providing a pleasant and intuitive experience for users in the target audience. The modular design allows for easy customization of the dashboard and navigation is fluid, with coherent and easy-to-understand visual elements. The UX is optimized for frequent use, reducing the number of steps required for common actions and integrating clear visual feedback, which increases satisfaction and efficiency in use.
+
+More details about UI/UX, as well as a Figma link with the design for the website, mobile app, embedded software and branding can be found [here](/docs/technical-overview/ui-ux).
+
+### 6. Versioning
+
+For versioning, we used Git and the GitHub platform.
+
+### 7. Team Members, Teamwork and Roles
+
+The Kivy team consists of:
+
+- Cazacu Christian-Matei (Web Developer, Backend Developer, Hardware Engineer, AI and Data Scientist).
+
+- Simedrea Alexandru (Web Developer, Mobile Developer, UI / UX Designer and Tester)
+
+During the development of the application, we used Jira as the main project management tool, leveraging all the essential functionalities of the platform. We organized the tasks into clear sprints, used the backlog to prioritize requirements and through the "issues" system we efficiently monitored bugs, new requirements and the progress of each component.
+
+## Technologies used
+
+### iOS application
+
+- Swift - The language used for development
+- SwiftUI - The framework for UI
+- SwiftData - Persistent data storage in a SQLite database
+- Alamofire - The library for network requests
+- HealthKit - The system offered by Apple for retrieving data related to user activity
+
+Swift and SwiftUI were chosen for their native integration with the Apple ecosystem and for the ease of rapid development of modern interfaces. SwiftData offers efficient persistence in SQLite and HealthKit is indispensable for accessing user health data.
+
+### Website
+
+- NextJS - Web development framework
+- Tailwind CSS - Application styling
+- Nextra - Documentation generation framework
+- Lingui - For internationalization
+- Prettier - For code formatting
+- Lucide React - For icons
+- React Query - For state management and API cache
+- Katex - For formula representation in documentation
+- Zod - For data validation
+- React Hook Form - For forms
+
+Next.js was chosen for its high performance and support for server-side rendering. Tailwind CSS offers fast and scalable styling and Nextra is ideal for generating clear documentation.
+
+### Embedded Software
+
+- Tauri - Framework for running applications
+- NextJS - Web development framework
+- Tailwind CSS - Application styling
+- Nextra - Framework for generating documentation
+- Lingui - For internationalization
+- Prettier - For code formatting
+- Zod - For data validation
+- React Hook Form - For forms
+- React Query - For state management and API cache
+- Lucide React - For icons
+
+Tauri was selected for its low resource consumption and efficient integration with web applications. The web architecture (Next.js, Tailwind CSS, etc.) was maintained for consistency across platforms.
+
+### Backend
+
+- NestJS - Main Framework
+- Passport - For Authentication
+- DrizzleORM - Library for interacting with the database
+- PostgreSQL - Database used
+- Class Transformer + Class Validator - Data Validation
+- Redis + BullMQ - For Notifications
+- JWT - Technology for authentication tokens used
+
+NestJS was chosen for its modular and scalable structure. DrizzleORM provides a typesafe interface to the PostgreSQL database. Redis and BullMQ efficiently handle asynchronous tasks and Passport and JWT provide a modern and secure authentication system.
+
+### AI and Research
+
+- Pytorch - Framework for developing neural networks
+- Numpy - Tensor library specialized in AI
+- Pandas - Working with datasets
+- Scikit-Learn - Data processing and other minor tasks
+- LaTeX - Writing the research paper
+
+PyTorch is ideal for developing artificial intelligence models due to its flexibility. Numpy and Pandas are standards in data processing and Scikit-Learn completes the pipeline with classic machine learning functionalities.
+
+### Organization and Testing
+
+- GitHub + Git - Versioning
+- Jira + Confluence - Project Management
+- E2E Tests - Application Testing
+
+Git and GitHub are standards in collaborative code versioning. Jira and Confluence help in efficient project planning and documentation. E2E tests ensure the stability and full functionality of the application in real-world conditions.

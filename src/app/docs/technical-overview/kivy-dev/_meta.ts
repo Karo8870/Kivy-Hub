@@ -1,13 +1,16 @@
 import type { MetaRecord } from 'nextra';
 
 export default {
+  introduction: {
+    title: 'Introduction'
+  },
   'getting-started': {
     title: 'Getting Started'
   },
-  'architecture': {
+  architecture: {
     title: 'Architecture'
   },
-  'technologies': {
+  technologies: {
     title: 'Technologies'
   }
 } as MetaRecord;

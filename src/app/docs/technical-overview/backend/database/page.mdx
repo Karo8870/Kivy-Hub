@@ -1,0 +1,192 @@
+# 📘 Database Schema Documentation
+
+This document describes the database schema used in the application. It includes all tables, enums, their fields, types, constraints, and relationships.
+
+## Enums
+
+### `difficulty_enum`
+
+- `easy`
+- `medium`
+- `hard`
+
+### `gender_enum`
+
+- `male`
+- `female`
+
+### `diet_enum`
+
+- `no_diet`
+- `vegetarian`
+- `vegan`
+- `pescatarian`
+
+## Table: `users`
+
+| Column     | Type    | Constraints         | Description              |
+| ---------- | ------- | ------------------- | ------------------------ |
+| id         | INTEGER | PK, auto-generated  | User ID                  |
+| email      | TEXT    | NOT NULL, UNIQUE    | User email               |
+| first_name | TEXT    | NOT NULL            | First name               |
+| last_name  | TEXT    | NOT NULL            | Last name                |
+| password   | TEXT    | NOT NULL            | Hashed password          |
+| picture    | TEXT    |                     | Profile picture URL      |
+| username   | TEXT    | NOT NULL, UNIQUE    | Unique username          |
+| followers  | INTEGER | NOT NULL, DEFAULT 0 | Number of followers      |
+| follows    | INTEGER | NOT NULL, DEFAULT 0 | Number of followed users |
+
+---
+
+## Table: `recipes`
+
+| Column            | Type     | Constraints                | Description               |
+| ----------------- | -------- | -------------------------- | ------------------------- |
+| id                | INTEGER  | PK, auto-generated         | Recipe ID                 |
+| source            | TEXT     |                            | Original source           |
+| original_id       | TEXT     |                            | Original external ID      |
+| name              | TEXT     | NOT NULL                   | Recipe name               |
+| created_at        | DATE     | NOT NULL, DEFAULT NOW()    | Creation timestamp        |
+| preparation_time  | INTEGER  | NOT NULL                   | Time to prepare           |
+| cooking_time      | INTEGER  | NOT NULL                   | Time to cook              |
+| tags              | TEXT[]   | NOT NULL                   | Array of tags             |
+| steps_count       | INTEGER  | NOT NULL                   | Number of steps           |
+| steps             | TEXT[]   | NOT NULL                   | Step-by-step instructions |
+| description       | TEXT     | NOT NULL                   | Recipe description        |
+| ingredients_count | INTEGER  | NOT NULL                   | Number of ingredients     |
+| ingredients       | JSONB[]  | NOT NULL                   | List of ingredients       |
+| calories          | REAL     |                            | Caloric value             |
+| total_fat         | REAL     |                            | Total fat                 |
+| sugar             | REAL     |                            | Sugar content             |
+| sodium            | REAL     |                            | Sodium content            |
+| protein           | REAL     |                            | Protein content           |
+| saturated_fat     | REAL     |                            | Saturated fat             |
+| carbohydrates     | REAL     |                            | Carbohydrates             |
+| cholesterol       | REAL     |                            | Cholesterol               |
+| fiber             | REAL     |                            | Fiber                     |
+| likes             | INTEGER  | NOT NULL, DEFAULT 0        | Like count                |
+| author_name       | TEXT     |                            | Name of author            |
+| author_id         | INTEGER  | FK → users.id              | Author user ID            |
+| images            | TEXT[]   | NOT NULL                   | Image URLs                |
+| difficulty        | ENUM     | NOT NULL (difficulty_enum) | Difficulty level          |
+| servings          | INTEGER  |                            | Number of servings        |
+| serving_size      | INTEGER  |                            | Serving size              |
+| searchable        | TSVECTOR | DEFAULT TRUE               | Full-text search vector   |
+
+**Indexes**
+
+- `searchable_idx` on `searchable`
+
+## Table: `recipe_likes`
+
+| Column    | Type    | Constraints                            | Description           |
+| --------- | ------- | -------------------------------------- | --------------------- |
+| recipe_id | INTEGER | PK, FK → recipes.id, ON DELETE CASCADE | Liked recipe ID       |
+| user_id   | INTEGER | PK, FK → users.id                      | User who liked recipe |
+
+## Table: `preferences`
+
+| Column         | Type    | Constraints            | Description        |
+| -------------- | ------- | ---------------------- | ------------------ |
+| id             | INTEGER | PK, FK → users.id      | User ID            |
+| activity_level | REAL    | NOT NULL               | Activity level     |
+| weight         | REAL    | NOT NULL               | User weight        |
+| height         | REAL    | NOT NULL               | User height        |
+| gender         | ENUM    | NOT NULL (gender_enum) | Gender             |
+| age            | INTEGER | NOT NULL               | User age           |
+| allergens      | TEXT[]  | NOT NULL               | Known allergens    |
+| diet           | ENUM    | NOT NULL (diet_enum)   | Dietary preference |
+
+## Table: `posts`
+
+| Column             | Type    | Constraints                                 | Description               |
+| ------------------ | ------- | ------------------------------------------- | ------------------------- |
+| id                 | INTEGER | PK, auto-generated                          | Post ID                   |
+| source             | TEXT    |                                             | Source of post            |
+| author_id          | INTEGER | FK → users.id                               | Author user ID            |
+| rating             | INTEGER | NOT NULL                                    | User rating               |
+| recipe_id          | INTEGER | NOT NULL, FK → recipes.id ON DELETE CASCADE | Linked recipe ID          |
+| content            | TEXT    | NOT NULL                                    | Text content              |
+| author_name        | TEXT    |                                             | Name of post author       |
+| original_id        | TEXT    |                                             | Original external post ID |
+| original_recipe_id | TEXT    |                                             | External recipe ID        |
+| created_at         | DATE    | NOT NULL, DEFAULT NOW()                     | Creation date             |
+| likes_count        | INTEGER | DEFAULT 0                                   | Number of likes           |
+
+## Table: `post_likes`
+
+| Column  | Type    | Constraints                          | Description         |
+| ------- | ------- | ------------------------------------ | ------------------- |
+| post_id | INTEGER | PK, FK → posts.id, ON DELETE CASCADE | Liked post ID       |
+| user_id | INTEGER | PK, FK → users.id                    | User who liked post |
+
+## Table: `followers`
+
+| Column      | Type    | Constraints       | Description      |
+| ----------- | ------- | ----------------- | ---------------- |
+| follower_id | INTEGER | PK, FK → users.id | Follower user ID |
+| followed_id | INTEGER | PK, FK → users.id | Followed user ID |
+
+## Table: `featured_recipes`
+
+| Column    | Type    | Constraints                                 | Description        |
+| --------- | ------- | ------------------------------------------- | ------------------ |
+| id        | INTEGER | PK, auto-generated                          | Record ID          |
+| recipe_id | INTEGER | NOT NULL, FK → recipes.id ON DELETE CASCADE | Featured recipe ID |
+
+## Table: `dietary-plans`
+
+| Column     | Type    | Constraints        | Description           |
+| ---------- | ------- | ------------------ | --------------------- |
+| id         | INTEGER | PK, auto-generated | Plan ID               |
+| start_date | DATE    | NOT NULL           | Plan start date       |
+| target     | REAL    | NOT NULL           | Target weight/calorie |
+
+## Table: `dietary_logs`
+
+| Column     | Type      | Constraints                               | Description     |
+| ---------- | --------- | ----------------------------------------- | --------------- |
+| id         | INTEGER   | PK, auto-generated                        | Log ID          |
+| calories   | REAL      | NOT NULL                                  | Calories logged |
+| details    | JSONB     | NOT NULL                                  | Log detail JSON |
+| created_at | TIMESTAMP | NOT NULL, DEFAULT NOW()                   | Time of logging |
+| user_id    | INTEGER   | NOT NULL, FK → users.id ON DELETE CASCADE | Linked user ID  |
+
+## Table: `chats`
+
+| Column     | Type      | Constraints             | Description     |
+| ---------- | --------- | ----------------------- | --------------- |
+| id         | INTEGER   | PK, auto-generated      | Chat ID         |
+| name       | TEXT      | NOT NULL                | Chat name/title |
+| created_at | TIMESTAMP | NOT NULL, DEFAULT NOW() | Creation time   |
+| updated_at | TIMESTAMP | NOT NULL, DEFAULT NOW() | Last update     |
+| user_id    | INTEGER   | NOT NULL, FK → users.id | Creator user ID |
+
+## Table: `chat_messages`
+
+| Column     | Type      | Constraints                               | Description             |
+| ---------- | --------- | ----------------------------------------- | ----------------------- |
+| id         | INTEGER   | PK, auto-generated                        | Message ID              |
+| role       | TEXT      | NOT NULL                                  | Role (user/system/etc.) |
+| parts      | JSONB[]   | NOT NULL                                  | Message content parts   |
+| created_at | TIMESTAMP | NOT NULL, DEFAULT NOW()                   | Message timestamp       |
+| chat_id    | INTEGER   | NOT NULL, FK → chats.id ON DELETE CASCADE | Linked chat ID          |
+| user_id    | INTEGER   | NOT NULL, FK → users.id                   | Sender user ID          |
+
+## Relationships Summary
+
+- `recipes.author_id` → `users.id`
+- `recipe_likes.user_id` → `users.id`
+- `recipe_likes.recipe_id` → `recipes.id`
+- `preferences.id` → `users.id`
+- `posts.author_id` → `users.id`
+- `posts.recipe_id` → `recipes.id`
+- `post_likes.user_id` → `users.id`
+- `post_likes.post_id` → `posts.id`
+- `followers.follower_id` → `users.id`
+- `followers.followed_id` → `users.id`
+- `featured_recipes.recipe_id` → `recipes.id`
+- `dietary_logs.user_id` → `users.id`
+- `chats.user_id` → `users.id`
+- `chat_messages.chat_id` → `chats.id`
+- `chat_messages.user_id` → `users.id`
