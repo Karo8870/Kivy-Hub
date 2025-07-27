@@ -1,11 +1,8 @@
 import type { MetaRecord } from 'nextra';
 
 export default {
-  'getting-started': {
-    title: 'Getting Started'
-  },
-  structure: {
-    title: 'Structure'
+  'creating-kivy-hub': {
+    title: 'Creating Kivy Hub'
   },
   'software-architecture': {
     title: 'Software Architecture'

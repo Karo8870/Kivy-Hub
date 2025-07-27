@@ -1,0 +1,49 @@
+# Getting Started
+
+This guide will help you set up and run the project locally.
+
+## Prerequisites
+
+Before starting, make sure you have the following installed:
+
+- [Bun](https://bun.sh/)
+- [PostgreSQL](https://www.postgresql.org/) or another supported database
+- [Git](https://git-scm.com/)
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/Kivy-Infoeducatie/Kivy-Backend.git
+cd your-repo-name
+```
+
+## Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+# or
+bun install
+```
+
+## Environment
+
+Create a `.env` file and fill it with the proper information:
+
+```env
+JWT_SECRET="secret"
+
+DB_URL="postgres://user:password@localhost:5432/databse"
+
+GEMINI_API_KEY="API_KEY"
+GEMINI_MODEL="gemini-1.5-flash-002"
+```
+
+## Pushing Database Schema
+
+When first creating a database or after modifying the existing schema, run the following command:
+
+```bash
+bun migrate
+```

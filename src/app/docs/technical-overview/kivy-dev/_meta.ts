@@ -7,9 +7,6 @@ export default {
   'getting-started': {
     title: 'Getting Started'
   },
-  architecture: {
-    title: 'Architecture'
-  },
   technologies: {
     title: 'Technologies'
   }

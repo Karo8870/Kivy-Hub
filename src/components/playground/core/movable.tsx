@@ -80,7 +80,6 @@ export function Movable({
         }
       }}
       onSecondaryRelease={() => {
-        console.log('Release');
         setIsDragging(false);
       }}
       {...props}

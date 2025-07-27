@@ -1,9 +1,6 @@
 import type { MetaRecord } from 'nextra';
 
 export default {
-  overview: {
-    title: 'Overview'
-  },
   'getting-started': {
     title: 'Getting Started'
   },

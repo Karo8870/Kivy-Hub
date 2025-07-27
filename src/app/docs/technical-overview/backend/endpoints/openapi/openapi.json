@@ -3,35 +3,82 @@
   "paths": {
     "/account": {
       "get": {
+        "description": "Retrieves the account information of the currently authenticated user",
         "operationId": "AccountController_findOwn",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Account details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "email": "john.doe@example.com",
+                    "username": "john_doe",
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "createdAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Get current user account details",
         "tags": [
           "Account"
         ]
       },
       "patch": {
+        "description": "Updates the account information of the currently authenticated user",
         "operationId": "AccountController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "Account update payload",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateAccountDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Basic update",
+                  "value": {
+                    "email": "new.email@example.com",
+                    "username": "new_username",
+                    "firstName": "Jane",
+                    "lastName": "Smith"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Account updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "email": "new.email@example.com",
+                    "username": "new_username",
+                    "firstName": "Jane",
+                    "lastName": "Smith",
+                    "updatedAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
           }
         },
+        "summary": "Update current user account details",
         "tags": [
           "Account"
         ]
@@ -39,74 +86,148 @@
     },
     "/auth/login": {
       "post": {
-        "description": "Performs authentication and returns a JWT token if successful",
+        "description": "Authenticates user credentials and returns a JWT token upon successful login. The token should be included in subsequent requests as a Bearer token in the Authorization header.",
         "operationId": "AuthController_organizationLogin",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "email": "user@example.com",
+                    "username": "john_doe",
+                    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials"
           }
         },
-        "summary": "Login",
+        "summary": "User Authentication",
         "tags": [
-          "Auth"
+          "Authentication"
         ]
       }
     },
     "/auth/register": {
       "post": {
-        "description": "Verifies email and username uniqueness and creates an account",
+        "description": "Creates a new user account after validating email and username uniqueness. The password must meet strong password requirements, and the username must follow specific constraints.",
         "operationId": "AuthController_register",
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "User registration details",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RegisterDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Standard Registration",
+                  "value": {
+                    "email": "john.doe@example.com",
+                    "username": "john_doe",
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "password": "StrongP@ssw0rd!"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Registration successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "email": "john.doe@example.com",
+                    "username": "john_doe",
+                    "firstName": "John",
+                    "lastName": "Doe"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or duplicate email/username"
           }
         },
-        "summary": "Register",
+        "summary": "User Registration",
         "tags": [
-          "Auth"
+          "Authentication"
         ]
       }
     },
     "/dietary-plan/target": {
       "get": {
+        "description": "Retrieves the user's daily caloric target and current progress",
         "operationId": "DietaryPlanController_getTarget",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Target information retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "dailyTarget": 2000,
+                    "currentIntake": 1500,
+                    "remaining": 500
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Get caloric target",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       }
     },
     "/dietary-plan/log": {
       "get": {
+        "description": "Retrieves all caloric intake logs for the current user",
         "operationId": "DietaryPlanController_getLogs",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Calorie logs retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": [
+                    {
+                      "id": 1,
+                      "calories": 500,
+                      "description": "Lunch",
+                      "timestamp": "2025-07-28T12:00:00Z"
+                    }
+                  ]
+                }
+              }
+            }
           }
         },
+        "summary": "Get calorie logs",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       },
       "post": {
+        "description": "Records a new caloric intake entry",
         "operationId": "DietaryPlanController_logCalories",
         "parameters": [],
         "requestBody": {
@@ -115,22 +236,44 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LogCaloriesDto"
+              },
+              "examples": {
+                "example1": {
+                  "value": {
+                    "calories": 500,
+                    "description": "Lunch"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Calories logged successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 1,
+                    "calories": 500,
+                    "description": "Lunch",
+                    "timestamp": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Log calories",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       }
     },
     "/dietary-plan/log/recipe/{id}": {
       "post": {
+        "description": "Records caloric intake from a specific recipe",
         "operationId": "DietaryPlanController_logRecipe",
         "parameters": [
           {
@@ -144,16 +287,30 @@
         ],
         "responses": {
           "201": {
-            "description": ""
+            "description": "Recipe calories logged successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 1,
+                    "recipeId": 123,
+                    "calories": 750,
+                    "timestamp": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Log recipe calories",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       }
     },
     "/dietary-plan": {
       "post": {
+        "description": "Creates a new dietary plan with specified caloric targets and preferences",
         "operationId": "DietaryPlanController_create",
         "parameters": [],
         "requestBody": {
@@ -162,34 +319,49 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateDietaryPlanDto"
+              },
+              "examples": {
+                "example1": {
+                  "value": {
+                    "dailyTarget": 2000,
+                    "preferences": [
+                      "low-carb",
+                      "high-protein"
+                    ]
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Dietary plan created successfully"
           }
         },
+        "summary": "Create dietary plan",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       },
       "get": {
+        "description": "Retrieves all dietary plans for the current user",
         "operationId": "DietaryPlanController_findAll",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "List of dietary plans retrieved successfully"
           }
         },
+        "summary": "Get all dietary plans",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       }
     },
     "/dietary-plan/{id}": {
       "get": {
+        "description": "Retrieves a specific dietary plan by ID",
         "operationId": "DietaryPlanController_findOne",
         "parameters": [
           {
@@ -203,14 +375,19 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Dietary plan retrieved successfully"
+          },
+          "404": {
+            "description": "Dietary plan not found"
           }
         },
+        "summary": "Get specific dietary plan",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       },
       "patch": {
+        "description": "Updates an existing dietary plan",
         "operationId": "DietaryPlanController_update",
         "parameters": [
           {
@@ -228,20 +405,35 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdateDietaryPlanDto"
+              },
+              "examples": {
+                "example1": {
+                  "value": {
+                    "dailyTarget": 2200,
+                    "preferences": [
+                      "vegetarian"
+                    ]
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Dietary plan updated successfully"
+          },
+          "404": {
+            "description": "Dietary plan not found"
           }
         },
+        "summary": "Update dietary plan",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       },
       "delete": {
+        "description": "Removes a dietary plan by ID",
         "operationId": "DietaryPlanController_remove",
         "parameters": [
           {
@@ -255,58 +447,89 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Dietary plan deleted successfully"
+          },
+          "404": {
+            "description": "Dietary plan not found"
           }
         },
+        "summary": "Delete dietary plan",
         "tags": [
-          "DietaryPlan"
+          "Dietary Plan"
         ]
       }
     },
     "/recipe": {
       "post": {
+        "description": "Creates a new recipe with the provided details including ingredients, instructions, and nutritional information",
         "operationId": "RecipeController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "Recipe creation payload",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreateRecipeDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Basic Recipe",
+                  "value": {
+                    "title": "Chocolate Chip Cookies",
+                    "description": "Classic homemade cookies",
+                    "ingredients": [
+                      "flour",
+                      "sugar",
+                      "chocolate chips"
+                    ],
+                    "instructions": [
+                      "Mix ingredients",
+                      "Bake at 350°F"
+                    ],
+                    "preparationTime": 30,
+                    "servings": 12
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Recipe created successfully"
           }
         },
+        "summary": "Create a new recipe",
         "tags": [
-          "Recipe"
+          "Recipes"
         ]
       },
       "get": {
+        "description": "Retrieves a list of all available recipes",
         "operationId": "RecipeController_findMany",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "List of recipes retrieved successfully"
           }
         },
+        "summary": "Get all recipes",
         "tags": [
-          "Recipe"
+          "Recipes"
         ]
       }
     },
     "/recipe/search": {
       "post": {
+        "description": "Search recipes using various criteria with cursor-based pagination",
         "operationId": "RecipeController_search",
         "parameters": [
           {
             "name": "cursor",
-            "required": true,
+            "required": false,
             "in": "query",
+            "description": "Pagination cursor",
             "schema": {
               "type": "string"
             }
@@ -324,64 +547,41 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Search results retrieved successfully"
           }
         },
+        "summary": "Search recipes",
         "tags": [
-          "Recipe"
+          "Recipes"
         ]
       }
     },
     "/recipe/recommend": {
       "get": {
+        "description": "Retrieves personalized recipe recommendations based on user preferences and history",
         "operationId": "RecipeController_recommend",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Recommended recipes retrieved successfully"
           }
         },
+        "summary": "Get recommended recipes",
         "tags": [
-          "Recipe"
+          "Recipes"
         ]
       }
     },
     "/recipe/liked": {
       "get": {
+        "description": "Retrieves all recipes liked by the current user with pagination",
         "operationId": "RecipeController_getLikedRecipes",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Recipe"
-        ]
-      }
-    },
-    "/recipe/featured": {
-      "get": {
-        "operationId": "RecipeController_getFeaturedRecipes",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Recipe"
-        ]
-      }
-    },
-    "/recipe/{id}": {
-      "get": {
-        "operationId": "RecipeController_findOne",
         "parameters": [
           {
-            "name": "id",
-            "required": true,
-            "in": "path",
+            "name": "cursor",
+            "required": false,
+            "in": "query",
+            "description": "Pagination cursor",
             "schema": {
               "type": "string"
             }
@@ -389,20 +589,68 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Liked recipes retrieved successfully"
           }
         },
+        "summary": "Get liked recipes",
         "tags": [
-          "Recipe"
+          "Recipes"
+        ]
+      }
+    },
+    "/recipe/featured": {
+      "get": {
+        "description": "Retrieves a curated list of featured recipes",
+        "operationId": "RecipeController_getFeaturedRecipes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Featured recipes retrieved successfully"
+          }
+        },
+        "summary": "Get featured recipes",
+        "tags": [
+          "Recipes"
+        ]
+      }
+    },
+    "/recipe/{id}": {
+      "get": {
+        "description": "Retrieves detailed information about a specific recipe",
+        "operationId": "RecipeController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Recipe ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe retrieved successfully"
+          },
+          "404": {
+            "description": "Recipe not found"
+          }
+        },
+        "summary": "Get recipe by ID",
+        "tags": [
+          "Recipes"
         ]
       },
       "patch": {
+        "description": "Updates an existing recipe with new information",
         "operationId": "RecipeController_update",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "Recipe ID",
             "schema": {
               "type": "string"
             }
@@ -420,20 +668,26 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Recipe updated successfully"
+          },
+          "404": {
+            "description": "Recipe not found"
           }
         },
+        "summary": "Update recipe",
         "tags": [
-          "Recipe"
+          "Recipes"
         ]
       },
       "delete": {
+        "description": "Removes a recipe from the system",
         "operationId": "RecipeController_remove",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "Recipe ID",
             "schema": {
               "type": "string"
             }
@@ -441,52 +695,106 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Recipe deleted successfully"
+          },
+          "404": {
+            "description": "Recipe not found"
           }
         },
+        "summary": "Delete recipe",
         "tags": [
-          "Recipe"
+          "Recipes"
         ]
       }
     },
     "/post": {
       "post": {
+        "description": "Creates a new post with the provided content and associates it with a recipe",
         "operationId": "PostController_create",
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "Post creation payload",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/CreatePostDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Basic post",
+                  "value": {
+                    "content": "This recipe was amazing! Will definitely make it again.",
+                    "rating": 5,
+                    "recipeId": 123
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Post created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 1,
+                    "content": "This recipe was amazing! Will definitely make it again.",
+                    "rating": 5,
+                    "recipeId": 123,
+                    "createdAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
           }
         },
+        "summary": "Create a new post",
         "tags": [
-          "Post"
+          "Posts"
         ]
       },
       "get": {
+        "description": "Retrieves a paginated list of posts using cursor-based pagination",
         "operationId": "PostController_findMany",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Posts retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "items": [
+                      {
+                        "id": 1,
+                        "content": "This recipe was amazing!",
+                        "rating": 5,
+                        "recipeId": 123,
+                        "createdAt": "2025-07-28T12:00:00Z"
+                      }
+                    ],
+                    "nextCursor": "2"
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Get multiple posts",
         "tags": [
-          "Post"
+          "Posts"
         ]
       }
     },
     "/post/{id}": {
       "patch": {
+        "description": "Updates an existing post with the provided content",
         "operationId": "PostController_update",
         "parameters": [
           {
@@ -500,24 +808,51 @@
         ],
         "requestBody": {
           "required": true,
+          "description": "Post update payload",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdatePostDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Update post content",
+                  "value": {
+                    "content": "Updated: This recipe was good but needed more seasoning.",
+                    "rating": 4
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Post updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 1,
+                    "content": "Updated: This recipe was good but needed more seasoning.",
+                    "rating": 4,
+                    "updatedAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
           }
         },
+        "summary": "Update a post",
         "tags": [
-          "Post"
+          "Posts"
         ]
       },
       "delete": {
+        "description": "Removes a post by its ID",
         "operationId": "PostController_remove",
         "parameters": [
           {
@@ -531,97 +866,321 @@
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Post deleted successfully"
+          },
+          "404": {
+            "description": "Post not found"
           }
         },
+        "summary": "Delete a post",
         "tags": [
-          "Post"
+          "Posts"
         ]
       }
     },
     "/recipe/{id}/like": {
       "post": {
+        "description": "Adds the current user to the list of users who liked the specified recipe",
         "operationId": "RecipeLikeController_like",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Recipe ID",
+            "schema": {
+              "example": "123",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "201": {
-            "description": ""
+          "200": {
+            "description": "Recipe liked successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "recipeId": 123,
+                    "liked": true,
+                    "likesCount": 42
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found"
           }
         },
+        "summary": "Like a recipe",
         "tags": [
-          "RecipeLike"
+          "Recipe Likes"
         ]
       },
       "delete": {
+        "description": "Removes the current user from the list of users who liked the specified recipe",
         "operationId": "RecipeLikeController_unlike",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Recipe ID",
+            "schema": {
+              "example": "123",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Recipe unliked successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "recipeId": 123,
+                    "liked": false,
+                    "likesCount": 41
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found"
           }
         },
+        "summary": "Unlike a recipe",
         "tags": [
-          "RecipeLike"
+          "Recipe Likes"
         ]
       }
     },
     "/post/{id}/like": {
       "post": {
+        "description": "Adds a like to the specified post for the currently authenticated user. If the user has already liked the post, the request will be ignored.",
         "operationId": "PostLikeController_like",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the post to like",
+            "schema": {
+              "example": "123",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
-          "201": {
-            "description": ""
+          "200": {
+            "description": "Post liked successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": true,
+                    "message": "Post liked successfully",
+                    "postId": "123",
+                    "likesCount": 42
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
           }
         },
+        "summary": "Like a post",
         "tags": [
-          "PostLike"
+          "Post Likes"
         ]
       },
       "delete": {
+        "description": "Removes the like from the specified post for the currently authenticated user. If the user has not liked the post, the request will be ignored.",
         "operationId": "PostLikeController_unlike",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The ID of the post to unlike",
+            "schema": {
+              "example": "123",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Post unliked successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": true,
+                    "message": "Post unliked successfully",
+                    "postId": "123",
+                    "likesCount": 41
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Post not found"
           }
         },
+        "summary": "Unlike a post",
         "tags": [
-          "PostLike"
+          "Post Likes"
         ]
       }
     },
     "/preferences": {
       "get": {
+        "description": "Retrieves the dietary restrictions, nutrition goals, and allergen information for the currently authenticated user",
         "operationId": "PreferencesController_findOne",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "User preferences retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "dietary": {
+                      "restrictions": [
+                        "vegetarian"
+                      ],
+                      "allergens": [
+                        "peanuts",
+                        "shellfish"
+                      ],
+                      "intolerances": [
+                        "lactose"
+                      ]
+                    },
+                    "nutrition": {
+                      "dailyCalories": 2000,
+                      "macros": {
+                        "protein": 30,
+                        "carbs": 50,
+                        "fats": 20
+                      }
+                    },
+                    "measurements": {
+                      "system": "metric",
+                      "weight": "kg",
+                      "height": "cm"
+                    },
+                    "updatedAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Get user preferences",
         "tags": [
           "Preferences"
         ]
       },
       "patch": {
+        "description": "Updates the dietary restrictions, nutrition goals, and allergen information for the currently authenticated user",
         "operationId": "PreferencesController_update",
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "User preferences update payload",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/UpdatePreferenceDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Update dietary and nutrition preferences",
+                  "value": {
+                    "dietary": {
+                      "restrictions": [
+                        "vegan"
+                      ],
+                      "allergens": [
+                        "tree-nuts",
+                        "soy"
+                      ],
+                      "intolerances": [
+                        "gluten"
+                      ]
+                    },
+                    "nutrition": {
+                      "dailyCalories": 1800,
+                      "macros": {
+                        "protein": 25,
+                        "carbs": 55,
+                        "fats": 20
+                      }
+                    },
+                    "measurements": {
+                      "system": "imperial",
+                      "weight": "lb",
+                      "height": "in"
+                    }
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Preferences updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": "123e4567-e89b-12d3-a456-426614174000",
+                    "dietary": {
+                      "restrictions": [
+                        "vegan"
+                      ],
+                      "allergens": [
+                        "tree-nuts",
+                        "soy"
+                      ],
+                      "intolerances": [
+                        "gluten"
+                      ]
+                    },
+                    "nutrition": {
+                      "dailyCalories": 1800,
+                      "macros": {
+                        "protein": 25,
+                        "carbs": 55,
+                        "fats": 20
+                      }
+                    },
+                    "measurements": {
+                      "system": "imperial",
+                      "weight": "lb",
+                      "height": "in"
+                    },
+                    "updatedAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
           }
         },
+        "summary": "Update user preferences",
         "tags": [
           "Preferences"
         ]
@@ -629,22 +1188,43 @@
     },
     "/user/{id}": {
       "get": {
+        "description": "Retrieves detailed user information based on the provided user ID. This endpoint returns user details including profile information and account status.",
         "operationId": "UserController_findOne",
         "parameters": [
           {
             "name": "id",
             "required": true,
             "in": "path",
+            "description": "Unique identifier of the user",
             "schema": {
+              "example": "123",
               "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "User found successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 123,
+                    "username": "john_doe",
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "email": "john.doe@example.com",
+                    "createdAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
           }
         },
+        "summary": "Get user by ID",
         "tags": [
           "User"
         ]
@@ -652,49 +1232,137 @@
     },
     "/user/{id}/follow": {
       "post": {
+        "description": "Creates a following relationship between the authenticated user and the target user",
         "operationId": "FollowController_follow",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID of the user to follow",
+            "schema": {
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": ""
+            "description": "Successfully followed the user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "followerId": "123e4567-e89b-12d3-a456-426614174000",
+                    "followingId": "987fcdeb-a432-56gh-i789-012345678901",
+                    "createdAt": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid user ID"
+          },
+          "404": {
+            "description": "User not found"
           }
         },
+        "summary": "Follow a user",
         "tags": [
-          "Follow"
+          "User Following"
         ]
       },
       "delete": {
+        "description": "Removes the following relationship between the authenticated user and the target user",
         "operationId": "FollowController_unfollow",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "ID of the user to unfollow",
+            "schema": {
+              "example": "123e4567-e89b-12d3-a456-426614174000",
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Successfully unfollowed the user"
+          },
+          "400": {
+            "description": "Invalid user ID"
+          },
+          "404": {
+            "description": "User not found"
           }
         },
+        "summary": "Unfollow a user",
         "tags": [
-          "Follow"
+          "User Following"
         ]
       }
     },
     "/intelligence/scan-to-create": {
       "post": {
+        "description": "Analyzes a food image and generates a complete recipe including ingredients, instructions, and nutritional information",
         "operationId": "IntelligenceController_scanToCreateRecipe",
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "Image data for recipe generation",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ScanToCreateDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Image scan request",
+                  "value": {
+                    "image": "base64_encoded_image_data",
+                    "preferences": [
+                      "vegetarian",
+                      "low-carb"
+                    ]
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Recipe generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 123,
+                    "name": "Grilled Vegetable Salad",
+                    "ingredients": [
+                      "zucchini",
+                      "bell peppers",
+                      "olive oil"
+                    ],
+                    "instructions": [
+                      "Slice vegetables",
+                      "Grill until tender"
+                    ],
+                    "nutritionalInfo": {
+                      "calories": 250,
+                      "protein": 5,
+                      "carbs": 15
+                    }
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Generate recipe from food image",
         "tags": [
           "Intelligence"
         ]
@@ -702,23 +1370,52 @@
     },
     "/intelligence/scan-to-log": {
       "post": {
+        "description": "Analyzes a food image to estimate nutritional content and logs it as a meal",
         "operationId": "IntelligenceController_scanToLogMeal",
         "parameters": [],
         "requestBody": {
           "required": true,
+          "description": "Image data for meal logging",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ScanToLogDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Meal scan request",
+                  "value": {
+                    "image": "base64_encoded_image_data",
+                    "mealType": "lunch"
+                  }
+                }
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": ""
+            "description": "Meal logged successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 456,
+                    "mealType": "lunch",
+                    "calories": 650,
+                    "nutrients": {
+                      "protein": 25,
+                      "carbs": 65,
+                      "fat": 22
+                    },
+                    "timestamp": "2025-07-28T12:00:00Z"
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Log meal from food image",
         "tags": [
           "Intelligence"
         ]
@@ -726,6 +1423,7 @@
     },
     "/intelligence/modify-recipe/{id}": {
       "post": {
+        "description": "Modifies an existing recipe based on dietary preferences, restrictions, or portion size",
         "operationId": "IntelligenceController_modifyRecipe",
         "parameters": [
           {
@@ -739,19 +1437,63 @@
         ],
         "requestBody": {
           "required": true,
+          "description": "Recipe modification parameters",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ModifyRecipeDto"
+              },
+              "examples": {
+                "example1": {
+                  "summary": "Recipe modification request",
+                  "value": {
+                    "modifications": [
+                      "gluten-free",
+                      "dairy-free"
+                    ],
+                    "servings": 4
+                  }
+                }
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": ""
+          "200": {
+            "description": "Recipe modified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "id": 789,
+                    "originalId": 123,
+                    "modifications": [
+                      "gluten-free",
+                      "dairy-free"
+                    ],
+                    "ingredients": [
+                      "gluten-free flour",
+                      "almond milk"
+                    ],
+                    "instructions": [
+                      "Mix dry ingredients",
+                      "Add wet ingredients"
+                    ],
+                    "nutritionalInfo": {
+                      "calories": 300,
+                      "protein": 8,
+                      "carbs": 45
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found"
           }
         },
+        "summary": "Modify existing recipe",
         "tags": [
           "Intelligence"
         ]
@@ -1624,15 +2366,45 @@
       },
       "ScanToCreateDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "image": {
+            "type": "string",
+            "description": "Base64 encoded string of the food image to be analyzed",
+            "example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAATU0...",
+            "format": "base64"
+          }
+        },
+        "required": [
+          "image"
+        ]
       },
       "ScanToLogDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "image": {
+            "type": "string",
+            "description": "Base64 encoded string of the food image to be analyzed",
+            "example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QAiRXhpZgAATU0...",
+            "format": "base64"
+          }
+        },
+        "required": [
+          "image"
+        ]
       },
       "ModifyRecipeDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Message describing the desired recipe modifications",
+            "example": "Make this recipe vegetarian and reduce the calories",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "message"
+        ]
       },
       "MessageDto": {
         "type": "object",

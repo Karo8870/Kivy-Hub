@@ -1,0 +1,47 @@
+# Getting Started with FastAPI
+
+This guide will walk you through setting up and running the Kivy Dev API.
+
+## Prerequisites
+
+Before starting, ensure you have the following installed:
+
+- **Python 3.8+**
+- **pip** (Python package installer)
+- (Recommended) **Virtualenv** or **venv**
+
+## 1. Clone the Repository
+
+```bash
+git clone https://github.com/Kivy-Infoeducatie/Kivy-AI-API.git
+cd Kivy-AI-API
+```
+
+## 2. Create a Virtual Environment
+
+Using venv
+
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+Using virtualenv
+
+```bash
+pip install virtualenv
+virtualenv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+## 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## 4. Run the FastAPI Server
+
+```bash
+uvicorn app.main:app --reload
+```

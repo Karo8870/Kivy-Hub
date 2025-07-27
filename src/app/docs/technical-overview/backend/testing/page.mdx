@@ -1,0 +1,15 @@
+# Testing
+
+To ensure the long-term stability, reliability, and quality of the backend services, a comprehensive testing strategy has been adopted. This includes a combination of automated and manual testing approaches that together verify both functional and non-functional requirements of the application.
+
+At the backend level, built with NestJS, we rely on Jest as our primary testing framework. Jest provides a fast and reliable test runner, with support for mocking, snapshots, and detailed coverage reports. Using SuperTest, we conduct end-to-end (e2e) testing, which simulates full API interactions by launching the application in a test environment and executing HTTP requests against real routes. These tests verify that the system behaves correctly from the client’s perspective, ensuring the proper integration of modules, middleware, and external dependencies like the database or authentication layers.
+
+To streamline test data generation and avoid hardcoding values, we use the Faker library. This allows us to generate realistic, randomized inputs for user data, posts, tokens, and other entities. By using Faker, we simulate real-world variability and improve the robustness of test coverage, especially in scenarios involving validation, edge cases, or malicious input attempts.
+
+In addition to automated testing, each major backend feature has been manually validated using tools such as Postman. These manual verifications complement our automated tests by allowing exploratory testing and inspection of headers, cookies, token lifecycles, and API responses under different authentication states. All API endpoints are also documented and tested for compliance with response formats and status codes.
+
+On the non-functional side, we conducted performance and stress tests in a controlled staging environment, simulating high traffic loads, database failures, and network latency. This revealed potential bottlenecks and allowed us to optimize response times, connection pooling, and retry logic. Furthermore, we tested backend portability by running services on various hardware configurations and containers to ensure the system behaves consistently across environments.
+
+The testing process is automated and integrated into our CI/CD pipeline, enabling quick regression testing on each code commit or pull request. This automation significantly reduces the time required to validate features while maintaining high confidence in code quality.
+
+All bugs and technical issues discovered during the testing phase are tracked and prioritized in Jira. Each bug report is documented with steps to reproduce, logs, screenshots, and related test cases, ensuring that fixes are traceable and verifiable. This workflow has allowed the team to maintain an organized, iterative, and quality-focused development process across all platforms.

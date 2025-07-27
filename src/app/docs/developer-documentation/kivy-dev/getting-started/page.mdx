@@ -1,0 +1,58 @@
+# Overview
+
+The Kivy Dev API is RESTful, follows OpenAPI 3.1 specifications, and is designed to integrate seamlessly with frontend clients, mobile apps, and kitchen devices like **Kivy Hub**.
+
+## Key Features
+
+### Authentication & Authorization
+
+- Register new users
+- Login and receive authentication tokens
+- Logout securely to end a session
+- API Tokens for secure client access, ideal for frontend or hardware integrations
+
+### Intelligent Recipe Tools
+
+- Search by name: Find exact or partial matches
+- Weighted search: Find recipes based on similarity of title, ingredients, and steps using custom weight parameters
+- Advanced similarity: Provide lists of terms with per-term weights for refined results
+- AI Recipe Generation: Use GPT-based AI to generate full recipes based on prompt input
+
+## Authentication
+
+All recipe and token endpoints require Bearer token authentication in the `Authorization` header:
+
+```
+Authorization: Bearer <your_api_token>
+```
+
+Tokens can be obtained by logging in or creating API tokens via the `/tokens` endpoint.
+
+## Request & Response Format
+
+- Request Body: JSON
+- Response Body: JSON
+- Errors: HTTP status codes with a `detail` field
+
+Example error response:
+
+```json
+{
+  "detail": "Unauthorized"
+}
+```
+
+## Available Endpoints
+
+| Category | Path                           | Method | Description                                  |
+| -------- | ------------------------------ | ------ | -------------------------------------------- |
+| Auth     | `/auth/register`               | POST   | Create a new user                            |
+| Auth     | `/auth/login`                  | POST   | Login with email and password                |
+| Auth     | `/auth/logout`                 | POST   | Logout the current user                      |
+| Tokens   | `/tokens/`                     | GET    | List all API tokens                          |
+| Tokens   | `/tokens/`                     | POST   | Create a new API token                       |
+| Tokens   | `/tokens/{token_id}`           | DELETE | Delete a specific API token                  |
+| Recipes  | `/recipes/search/by-name`      | GET    | Find recipes by name                         |
+| Recipes  | `/recipes/search`              | POST   | Search recipes with weighted field matching  |
+| Recipes  | `/recipes/similar`             | POST   | Search recipes using per-term weight vectors |
+| Recipes  | `/recipes/generate?prompt=...` | POST   | Generate a recipe based on AI prompt input   |

@@ -1,0 +1,13 @@
+# Software Architecture
+
+Most of the internal systems of Kivy Hub software are already described in the developer documentation, specifically, the following topics: Core Components, Event System, Debugging, Web Usage, Built-In Widgets were already described in the developer documentation [here](/docs/developer-documentation/kivy-hub/introduction).
+
+## Short Summary on How Kivy Hub Works
+
+Kivy uses a Next.js application running as a Tauri desktop app. Everything is contained in a single route and logic is separated by using react contexts. Each building block (called plugin) of Kivy Hub, from mouse interaction to the UI uses one of these context and can be easily added or removed just by changing the provider list. A multi-provider is used to recursively apply multiple providers from a list. These providers call hooks and optionally provide a `useKivyProvider` hook (where KivyProvider is replaced with the name of the plugin used) that allow you to access different items provided by the plugin. Examples of plugins: Menu (used for the Hub menu), Mouse (used to add mouse support by triggering events when the mouse does actions in the web), screens (used to manage screens), Timer (used to manage timers) etc. Each widget group should have its own plugin that manages internal state.
+
+> [!NOTE]
+>
+> Since plugins can access each other, the order of packages is crucial. For example, plugins for screens and tools frequently use the cursor position. Due to how contexts and context providers in react work, the hand recognition plugin should be declared before the screen and tools. Plugins that use other plugins should be placed before them.
+
+This system allows for modular adding and removal of components, widgets, screens, tools, functionalities and many more, making Kivy Hub very developer-friendly.

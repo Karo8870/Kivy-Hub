@@ -1,28 +1,25 @@
 import type { MetaRecord } from 'nextra';
 
 export default {
-  'overview': {
+  overview: {
     title: 'Overview'
   },
   'getting-started': {
     title: 'Getting Started'
   },
-  'database': {
+  database: {
     title: 'Database'
   },
-  'endpoints': {
+  endpoints: {
     title: 'Endpoints'
   },
-  'testing': {
+  testing: {
     title: 'Testing'
   },
-  'ai-branch': {
-    title: 'AI branch'
-  },
-  'technologies': {
+  technologies: {
     title: 'Technologies'
   },
-  'security': {
+  security: {
     title: 'Security'
   }
 } as MetaRecord;

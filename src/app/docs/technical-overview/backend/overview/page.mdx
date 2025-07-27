@@ -1,0 +1,5 @@
+# Overview
+
+The Backend service of Kivy is a common service that all other Kivy products (Kivy App, Kivy Hub and Kivy Dev) use. It handles accounts and authentification, database schema and CRUD access to all of the resources within Kivy such as posts, relations between accounts and many more. This part of the documentation covers implementation topics, such as security, testing and technologies, as well as database schema and API endpoints.
+
+This Backend service interacts with another one wrote in FastAPI that facilitates access to the AI tools. They are separate, this Backend service doesn't interact with any Kivy made AI service, and the only AI access within it is to the Gemini API used for the chat in the mobile app.

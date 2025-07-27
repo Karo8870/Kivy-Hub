@@ -1,0 +1,453 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Recipe API",
+    "description": "This API handles user authentication, API token management, and recipe-related operations. It supports advanced recipe search functionality using embedding similarity, as well as AI-generated recipe creation. Ideal for use in cooking apps, meal planners, and culinary recommendation engines.\n\n## Features\n- Register/login/logout endpoints for user authentication\n- API token lifecycle (create, list, delete)\n- Weighted search by recipe name, ingredients, and steps\n- Fine-grained similarity search using tokenized fields with weight multipliers\n- AI-powered recipe generation from prompt input\n\n## Usage Examples\nTo search for a recipe:\n```json\n{\n  \"name\": \"Tomato Soup\",\n  \"ingredients\": [\"tomato\", \"basil\"],\n  \"steps\": [\"Boil water\", \"Add tomatoes\"],\n  \"nameWeight\": 0.5,\n  \"ingredientsWeight\": 0.3,\n  \"stepsWeight\": 0.2\n}\n```\n\nTo generate a recipe:\n`POST /recipes/generate?prompt=Create a gluten-free dessert using coconut flour`",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "description": "Authenticate a user using email and password.",
+        "operationId": "login_auth_login_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register",
+        "description": "Register a new user account.",
+        "operationId": "register_auth_register_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Logout",
+        "description": "Logout the current authenticated user.",
+        "operationId": "logout_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens/": {
+      "get": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Find All Tokens",
+        "description": "Retrieve all API tokens for the current user.",
+        "operationId": "find_all_tokens_tokens__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Create Token",
+        "description": "Generate a new API token for authenticated access.",
+        "operationId": "create_token_tokens__post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tokens/{token_id}": {
+      "delete": {
+        "tags": [
+          "Tokens"
+        ],
+        "summary": "Delete Token",
+        "description": "Delete a specific API token by ID.",
+        "operationId": "delete_token_tokens__token_id__delete",
+        "parameters": [
+          {
+            "name": "token_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Token Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/search/by-name": {
+      "get": {
+        "summary": "Search Recipe By Name",
+        "description": "Search recipes by exact or partial name match.",
+        "operationId": "search_recipe_by_name_recipes_search_by_name_get",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "Pizza",
+              "title": "Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/search": {
+      "post": {
+        "summary": "Search Recipes",
+        "description": "Search for the most similar recipe based on various weighted fields.",
+        "operationId": "search_recipes_recipes_search_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeSearchParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipes/similar": {
+      "post": {
+        "summary": "Similar Recipes",
+        "description": "Find recipes based on detailed weighted similarity input.",
+        "operationId": "similar_recipes_recipes_similar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimilaritySearchParams"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "RecipeSearchParams": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Title of the recipe.",
+            "example": "Spaghetti"
+          },
+          "ingredients": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Ingredients",
+            "description": "List of ingredients.",
+            "example": [
+              "tomato",
+              "basil",
+              "garlic"
+            ]
+          },
+          "steps": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Steps",
+            "description": "Preparation steps.",
+            "example": [
+              "Boil water",
+              "Add pasta"
+            ]
+          },
+          "nameWeight": {
+            "type": "number",
+            "title": "Nameweight",
+            "description": "Weight of name similarity.",
+            "example": 0.5
+          },
+          "ingredientsWeight": {
+            "type": "number",
+            "title": "Ingredientsweight",
+            "description": "Weight of ingredient similarity.",
+            "example": 0.3
+          },
+          "stepsWeight": {
+            "type": "number",
+            "title": "Stepsweight",
+            "description": "Weight of steps similarity.",
+            "example": 0.2
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "ingredients",
+          "steps",
+          "nameWeight",
+          "ingredientsWeight",
+          "stepsWeight"
+        ],
+        "title": "RecipeSearchParams"
+      },
+      "SimilaritySearchParams": {
+        "properties": {
+          "names": {
+            "items": {
+              "$ref": "#/components/schemas/TextWeight"
+            },
+            "type": "array",
+            "title": "Names",
+            "description": "Weighted titles to match."
+          },
+          "ingredients": {
+            "items": {
+              "$ref": "#/components/schemas/TextWeight"
+            },
+            "type": "array",
+            "title": "Ingredients",
+            "description": "Weighted ingredients to match."
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/TextWeight"
+            },
+            "type": "array",
+            "title": "Steps",
+            "description": "Weighted preparation steps to match."
+          },
+          "nameWeight": {
+            "type": "number",
+            "title": "Nameweight",
+            "description": "Overall importance of name similarity.",
+            "example": 0.4
+          },
+          "ingredientsWeight": {
+            "type": "number",
+            "title": "Ingredientsweight",
+            "description": "Overall importance of ingredients similarity.",
+            "example": 0.4
+          },
+          "stepsWeight": {
+            "type": "number",
+            "title": "Stepsweight",
+            "description": "Overall importance of steps similarity.",
+            "example": 0.2
+          }
+        },
+        "type": "object",
+        "required": [
+          "names",
+          "ingredients",
+          "steps",
+          "nameWeight",
+          "ingredientsWeight",
+          "stepsWeight"
+        ],
+        "title": "SimilaritySearchParams"
+      },
+      "TextWeight": {
+        "properties": {
+          "value": {
+            "type": "string",
+            "title": "Value",
+            "description": "The text value to consider.",
+            "example": "chicken"
+          },
+          "weight": {
+            "type": "number",
+            "title": "Weight",
+            "description": "Weight assigned to this value.",
+            "example": 0.7
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "weight"
+        ],
+        "title": "TextWeight"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
