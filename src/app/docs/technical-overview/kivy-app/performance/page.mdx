@@ -1,0 +1,15 @@
+# Performance
+
+We have built a brand new way of fetching information in SwiftUI to improve performance, similar Tanstack Query on the web, called SwiftQuery. This simplifies the development of handling loading and error states, while also automatically caching the information based on query keys in a shared cache container, making navigating pages inside the app quicker.
+
+When fetching images, we use the `swiftui-cached-async-image` package, which handles caching them automatically, persisting even between complete app restarts.
+
+We also make saved recipes available instantly, by persisting some of their information, thus removing the initial loading time when freshly launching the app.
+
+To monitor the Kivy App performance, we used the built-in Xcode monitoring tools. The results can be seen below.
+
+![CPU](/docs/cpu.png)
+
+![Memory](/docs/memory.png)
+
+![Energy](/docs/energy.png)

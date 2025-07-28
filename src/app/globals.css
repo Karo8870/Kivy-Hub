@@ -229,3 +229,7 @@
         @apply bg-background text-foreground;
     }
 }
+
+.nextra-mobile-nav {
+    background: black;
+}

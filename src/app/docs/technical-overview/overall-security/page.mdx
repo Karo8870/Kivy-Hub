@@ -1,0 +1,21 @@
+# Security
+
+Security was a top priority throughout the development of all applications within the Kivy ecosystem. We implemented multiple layers of defense and followed best practices to ensure that both user data and system components remain secure and resilient to attacks.
+
+## Input Validation and Protection Mechanisms
+
+All user inputs were strictly validated on both client and server sides to prevent common vulnerabilities such as:
+
+- Injection attacks (e.g., SQL injection, command injection)
+- Sandbox escape attempts; On the backend, we used `chroot` environments to isolate application execution, ensuring strict sandboxing.
+- Privilege escalation and remote code execution (RCE); For all production deployments, we used Vercel, which provides a secure, sandboxed environment that limits system-level access and prevents unauthorized code execution.
+
+These validation and containment mechanisms formed the first layer of defense in our security model.
+
+## Error and Exception Handling
+
+To improve transparency and user experience without exposing internal logic, all error messages were handled gracefully. On the frontend, we used toast notifications to display descriptive yet secure messages to the user. Exceptions and internal errors were properly caught and logged without leaking sensitive information.
+
+## Attack Detection and Blocking
+
+Although active attack detection and blocking mechanisms (e.g., rate limiting, WAFs) were not necessary due to our deployment on Vercel, we benefited from the platform’s built-in security features. Vercel automatically mitigates many classes of attacks through its infrastructure-level protections, ensuring safety against known exploits.

@@ -1,0 +1,268 @@
+# Developer Planning and Roadmap
+
+## Phase 0: Preparation & Kick-off
+
+Duration: 2 weeks
+
+Goals: align team, finalize scope, set up infrastructure
+
+Tasks:
+
+- Project Kick-off Workshop
+- Review overall vision, scope, success criteria
+- Confirm responsibilities (Web, Mobile, AI, Hardware, DevOps, QA)
+- Architecture & Tech Stack Review
+- Finalize versions of React/Next.js, Tauri, SwiftUI, Raspberry Pi OS, Pytorch, etc.
+- Set up shared CI/CD pipelines, code repos, issue trackers
+- Environment Provisioning
+- Create base GitHub org, repositories & branch policies
+- Configure Trello/Confluence boards per component
+- Provision Raspberry Pi devices, test benches, Cloud dev servers
+
+Deliverables: Project charter; repo skeletons; initial CI pipeline; hardware bench setup
+
+---
+
+## Phase 1: Data & Embedding Model
+
+Duration: 6 weeks
+
+Goals: build recipe dataset; train & validate autoencoder embeddings
+
+Tasks:
+
+1. Dataset Assembly (2 weeks)
+
+- Ingest 500K recipes from Food.com & RecipeNLG
+- Standardize schema: ingredients, steps, metadata, dietary labels
+- Enrich ingredients with USDA & Open Food Facts nutritional data
+- Validate and filter for quality (duplicates, missing fields)
+
+2. Model Architecture & Training (3 weeks)
+
+- Prototype autoencoder on sample subset
+- Iterate architecture (embedding size, layer depth, regularization)
+- Train full-scale model; monitor loss and reconstruction quality
+- Unit tests for vector operations (addition, interpolation)
+
+3. Evaluation & Application (1 week)
+
+- Recipe classification, clustering, and generation demos
+- Documentation of embedding interface & performance metrics
+
+Deliverables: cleaned, versioned dataset; trained autoencoder weights; evaluation report; embedding API spec
+
+---
+
+## Phase 2: Smart-Kitchen Hardware Prototype
+
+Duration: 8 weeks (overlaps Phase 1)
+
+Goals: build Kivy Hub prototype; implement gesture mapping
+
+Tasks:
+
+1. Hardware Assembly & Mounting (1 week)
+
+- Procure HY320 projector, camera, Raspberry Pi 5, mounts
+- Assemble and cable devices; ensure stable mounting
+
+2. Camera–Projector Calibration (2 weeks)
+
+- Capture calibration images; compute homography transform
+- Integrate MediaPipe for hand‐landmark detection
+
+3. Local Processing Workflow (2 weeks)
+
+- Install and optimize Python, MediaPipe, OpenCV on Pi
+- Build homography + gesture‐to‐UI mapping module
+
+4. UI Projection & Interaction Demo (3 weeks)
+
+- Develop minimal Tauri web app showing buttons/sliders
+- Integrate gesture events into UI components
+- Iterative user tests to refine responsiveness & accuracy
+
+Deliverables: fully functional Pi prototype; gesture‐UI library; calibration docs
+
+---
+
+## Phase 3: Web & Embedded Application
+
+Duration: 6 weeks
+
+Goals: develop production-ready Tauri app and Next.js documentation site
+
+Tasks:
+
+1. Core UI Components (2 weeks)
+
+- Build React primitives: Tap, Swipe, Hold components
+- Style with Tailwind; ensure responsive grid layout
+
+2. Kitchen Tools Module (2 weeks)
+
+- Implement timer, measurement overlay, cutting guide
+- Hook tools into gesture components
+
+3. AI Hub & Recipe Viewer (1 week)
+
+- Connect embedding API for “smart suggestions”
+- Integrate recipe viewer: paginated steps, ingredient highlights
+
+4. Documentation Website (1 week)
+
+- Next.js site with Nextra for all technical docs
+- Internationalization via Lingui; formula support with KaTeX
+
+Deliverables: Tauri binary; Next.js documentation site live; component library
+
+---
+
+## Phase 4: Mobile Nutrition App
+
+Duration: 10 weeks (overlaps Web)
+
+Goals: deliver iOS-grade SwiftUI app with AI recommendations & HealthKit sync
+
+Tasks:
+
+1. Home Dashboard & Widgets (2 weeks)
+
+- Build customizable dashboard; widget drag-drop reorder
+- Connect HealthKit for steps/calories read
+
+2. Recipe & Social Feed (2 weeks)
+
+- Feed UI; comment/save/share flows
+- Generate shopping list from selected recipes
+
+3. Goals Tracking Module (2 weeks)
+
+- Calorie needs calculator (age, weight, height, activity)
+- Trends charts for nutrition & activity
+
+4. Advanced Search & Personalization (2 weeks)
+
+- Keyword & filter search against recipe dataset
+- Allergy/dietary preferences settings
+
+5. Settings & Integrations (2 weeks)
+
+- Manage HealthKit permissions, push notifications
+- Profile, privacy, dietary preferences
+
+Deliverables: TestFlight beta release; user feedback report; app store submission prep
+
+---
+
+## Phase 5: Kivy Dev API & Backend
+
+Duration: 6 weeks
+
+Goals: build token‐based API, secure backend, developer docs
+
+Tasks:
+
+1. API Design & Auth (1 week)
+
+- Define endpoints: embeddings, recipe search, personalization
+- JWT token flows, rate limiting via NestJS & Passport
+
+2. Data Layer & Caching (2 weeks)
+
+- DrizzleORM models for recipes, users, analytics
+- Redis + BullMQ for asynchronous tasks (notifications, content generation)
+
+3. Security & Hardening (1 week)
+
+- Enforce HTTPS, JWT expiry, bcrypt-salted passwords
+- Audit for SQL-injection, XSS, CSRF
+
+4. Developer Portal & Docs (2 weeks)
+
+- Next.js/API reference with code samples
+- Interactive API key management UI
+
+Deliverables: live API endpoints; Postman collection; developer portal
+
+---
+
+## Phase 6: Testing, QA & Performance
+
+Duration: 6 weeks (ongoing overlap)
+
+Goals: ensure stability, security, performance across all components
+
+Tasks:
+
+- Automated Test Suites
+- Backend e2e tests (NestJS + Supertest)
+- UI tests (Playwright for web & mobile prototypes)
+- Performance Benchmarking
+- Load test APIs; measure latency under 100 ms per call
+- Memory-profiling on Raspberry Pi & SwiftUI app
+- Security Audits
+- Penetration testing of web endpoints
+- Review mobile storage encryption & keychain
+
+Deliverables: test coverage reports; performance dashboards; security audit summary
+
+---
+
+## Phase 7: Beta Launch & Feedback
+
+Duration: 4 weeks
+
+Goals: iterative refinement based on real user input
+
+Tasks:
+
+- Release web app and hardware demo to pilot users
+- Distribute TestFlight invites & collect feedback via in-app surveys
+- Triage bug reports, usability issues; schedule sprints for fixes
+
+Deliverables: bug backlog; UX improvement plan; updated builds
+
+---
+
+## Phase 8: Commercial Launch & Monitoring
+
+Duration: 4 weeks
+
+Goals: public release, marketing, operational readiness
+
+Tasks:
+
+- Finalize packaging for Kivy Hub; coordinate manufacturing logistics
+- App Store & web launch campaigns; press release
+- Set up monitoring: Sentry for errors, Grafana dashboards for API usage
+
+Deliverables: launched product; marketing collateral; monitoring alerts configured
+
+---
+
+## Phase 9: Maintenance & Roadmapping
+
+Ongoing
+
+- Support & Updates: monthly sprints for bugfixes and enhancements
+- Feature Roadmap: plan Godot-based web re-implementation, Android support
+- Community & Dev Evangelism: webinars, SDK expansions
+
+---
+
+### Timeline Summary
+
+| Phase                             | Weeks   | Calendar (approx.)          |
+| --------------------------------- | ------- | --------------------------- |
+| 0. Prep & Kick-off                | 2       | Dec 1 – Dec 14, 2024        |
+| 1. Data & Embedding Model         | 6       | Dec 15, 2024 – Jan 26, 2025 |
+| 2. Hardware Prototype             | 8       | Dec 15, 2024 – Feb 9, 2025  |
+| 3. Web & Embedded App             | 6       | Jan 27, 2025 – Mar 9, 2025  |
+| 4. Mobile App                     | 10      | Dec 15, 2024 – Feb 23, 2025 |
+| 5. API & Backend                  | 6       | Mar 10 – Apr 20, 2025       |
+| 6. Testing & QA                   | 6       | Feb 10 – Mar 23, 2025       |
+| 7. Beta Launch & Feedback         | 4       | Apr 21 – May 18, 2025       |
+| 8. Commercial Launch & Monitoring | 4       | Sep 19 – Oct 17, 2025       |
+| 9. Maintenance & Roadmapping      | ongoing | from Oct 18, 2025 onward    |

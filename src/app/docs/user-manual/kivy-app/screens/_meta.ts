@@ -7,6 +7,9 @@ export default {
   'home-tab': {
     title: 'Home Tab'
   },
+  'ai-tab': {
+    title: 'AI Tab'
+  },
   'recipe-tab': {
     title: 'Recipe Tab'
   },
@@ -16,13 +19,16 @@ export default {
   'search-tab': {
     title: 'Search Tab'
   },
-  'settings': {
+  'water-intake': {
+    title: 'Water Intake'
+  },
+  'calorie-intake': {
+    title: 'Calorie Intake'
+  },
+  settings: {
     title: 'Settings'
   },
-  'recipe': {
+  recipe: {
     title: 'Recipe'
-  },
-  'browse-recipes': {
-    title: 'Browse Recipes'
   }
 } as MetaRecord;

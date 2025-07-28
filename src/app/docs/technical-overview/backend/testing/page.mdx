@@ -12,4 +12,6 @@ On the non-functional side, we conducted performance and stress tests in a contr
 
 The testing process is automated and integrated into our CI/CD pipeline, enabling quick regression testing on each code commit or pull request. This automation significantly reduces the time required to validate features while maintaining high confidence in code quality.
 
-All bugs and technical issues discovered during the testing phase are tracked and prioritized in Jira. Each bug report is documented with steps to reproduce, logs, screenshots, and related test cases, ensuring that fixes are traceable and verifiable. This workflow has allowed the team to maintain an organized, iterative, and quality-focused development process across all platforms.
+All bugs and technical issues discovered during the testing phase are tracked and prioritized in Trello. Each bug report is documented with steps to reproduce, logs, screenshots, and related test cases, ensuring that fixes are traceable and verifiable. This workflow has allowed the team to maintain an organized, iterative, and quality-focused development process across all platforms.
+
+To enforce code quality and reliability, we also configured commit hooks and merge hooks that automatically triggered tests and linting on every commit and pull request, ensuring that all changes met the required standards before being merged into the main branches.

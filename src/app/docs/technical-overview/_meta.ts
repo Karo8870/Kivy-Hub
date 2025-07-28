@@ -10,6 +10,18 @@ export default {
   summary: {
     title: 'Summary'
   },
+  'market-analysis': {
+    title: 'Market Analysis'
+  },
+  'developer-planning-and-roadmap': {
+    title: 'Developer Planning and Roadmap'
+  },
+  'author-opinion': {
+    title: 'Author Opinion'
+  },
+  'overall-security': {
+    title: 'Overall Security'
+  },
   hardware: {
     title: 'Hardware'
   },
@@ -45,5 +57,8 @@ export default {
   },
   'system-requirements': {
     title: 'System Requirements'
+  },
+  history: {
+    title: 'History'
   }
 } as MetaRecord;

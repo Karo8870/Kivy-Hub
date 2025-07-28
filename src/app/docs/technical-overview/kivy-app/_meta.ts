@@ -4,7 +4,10 @@ export default {
   'getting-started': {
     title: 'Getting Started'
   },
-  'technologies': {
+  testing: {
+    title: 'Testing'
+  },
+  technologies: {
     title: 'Technologies'
   }
 } as MetaRecord;
